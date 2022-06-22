@@ -49,7 +49,7 @@ function App() {
 
 
                 : <Routes>
-                  < Route path="/connexion" exact element={
+                  < Route path="" exact element={
                     <Connexion setUser={setUser}></Connexion>
                   } />
                 </Routes>
