@@ -51,7 +51,7 @@ const Connexion = (props) => {
     }
 
     return (
-        <div style={{marginTop: '-33%'}}>
+        <div style={{marginTop: '-1.05%'}}>
             <div className="container position-sticky z-index-sticky top-0">
                 <div className="row">
                     <div className="col-12">
@@ -78,7 +78,7 @@ const Connexion = (props) => {
                                                 <input type="email" className=" form-control  " placeholder='Email' name="email" value={user.email} onChange={handleChange} />
                                             </div>
                                             <div className="input-group input-group-dynamic mb-3">
-                                                <label className="form-label">Password</label>
+                                                <label className="form-label">Passsssssssssword</label>
                                                 <input type="password" className="form-control" name="pasword" value={user.pasword} onChange={handleChange} />
                                             </div>
                                             {!valid ? <p className='text-primary text_start'> Adresse email ou mot de passe inncorrect !! </p> : <p></p>}
