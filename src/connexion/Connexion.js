@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { auth } from '../../store/userSlice'
+import { auth } from '../store/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Connexion = (props) => {
@@ -51,7 +51,7 @@ const Connexion = (props) => {
     }
 
     return (
-        <div>
+        <div style={{marginTop: '-33%'}}>
             <div className="container position-sticky z-index-sticky top-0">
                 <div className="row">
                     <div className="col-12">

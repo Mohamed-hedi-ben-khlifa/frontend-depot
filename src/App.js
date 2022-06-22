@@ -1,5 +1,5 @@
 import './App.css';
-import Connexion from './admin/connexion/Connexion'
+import Connexion from './connexion/Connexion'
 import { Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import Admin from './route/Admin';
@@ -18,7 +18,7 @@ function App() {
 
 
   const dispatch = useDispatch()
-  useEffect(() => { dispatch(information()) }, [,dispatch])
+  useEffect(() => { dispatch(information()) }, [dispatch])
 
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
