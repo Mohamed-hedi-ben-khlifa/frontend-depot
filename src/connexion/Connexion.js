@@ -8,7 +8,6 @@ const Connexion = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch()
     const [valid, setvalid] = useState(true)
-    const [auth_user, setauth_user] = useState()
     const [user, setUser] = useState({
         email: "",
         pasword: "",
@@ -26,33 +25,11 @@ const Connexion = () => {
     const connexion = () => {
 
         dispatch(auth(user)).then(action => {
-
             localStorage.setItem("token", action.payload.token)
-            setauth_user(action.payload.user)
+            window.location.reload()
         })
     }
 
-
-    useEffect(() => {
-
-        console.log(auth_user);
-
-        if (auth_user?.role === "Gérant") {
-            navigate('/gerant/caisse')
-            console.log("action")
-        }
-
-        if (auth_user?.role === "admin") { 
-            navigate('/caisse')
-            console.log("action")
-        }
-
-        if (auth_user?.role === "Vendeur") {
-            navigate('/vendeur/caisse')
-            console.log("action")
-        }
-        
-    },[auth_user,dispatch])
 
     return (
         <div style={{ marginTop: '-1.05%' }}>
