@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 
+
 export const auth = createAsyncThunk('user/connexion',async (user,thunkAPI)=>{
     try{
         const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/User/login',user)
@@ -21,7 +22,7 @@ export const socket = createAsyncThunk('user/socket',async (user,thunkAPI)=>{
         const data = await resp.data
         return data       
     }
-    catch(error){
+    catch(error){ 
         console.error(error)
     }
 
@@ -35,6 +36,21 @@ export const get_employées = createAsyncThunk('user/get_employées',async (_,th
     }
     catch(error){
         console.error(error)
+    }
+
+})
+
+export const rechercher_user_par_token = createAsyncThunk('user/rechercher_user_par_token',async (_,thunkAPI)=>{
+    const token = localStorage.getItem("token")
+    try{
+
+   
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/User/rechercher_user_par_token', { headers: { authorization :  `Bearer ${token}` } })
+        const data = await resp.data
+        return data       
+    }
+    catch(error){
+        console.error("error")
     }
 
 })
@@ -63,7 +79,7 @@ const usertSlice = createSlice({
     },
     extraReducers:{
       
-        [auth.fulfilled]: (state,action) =>{
+        [rechercher_user_par_token.fulfilled]: (state,action) =>{
             if(action.payload.success ){
                 state.user = action.payload.user
                 state.isLogin = true

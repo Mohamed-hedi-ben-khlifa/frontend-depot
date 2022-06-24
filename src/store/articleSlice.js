@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+localStorage.getItem("token")
+
 
 
 export const ajouter_article = createAsyncThunk('article/ajouter_article', async (article, thunkAPI) => {

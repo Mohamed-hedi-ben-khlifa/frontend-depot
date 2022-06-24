@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { SocketContext } from '../../context/socket';
 import { liste_des_articles_en_attente } from '../../store/articleSlice';
 import { liste_des_notifications_non_vu } from '../../store/notificationSlice';
@@ -21,7 +21,7 @@ export default function SideBar(props) {
     const [notification, setnotification] = useState(false)
     const [profile, setprofile] = useState(false)
 
-    let navigate = useNavigate();
+
     const { boutique } = useSelector((state) => state.boutique)
     const socket = useContext(SocketContext);
     const dispatch = useDispatch()
@@ -29,16 +29,15 @@ export default function SideBar(props) {
     
     const logout = () => {
 
-        localStorage.removeItem('user')
-        props.setUser(null)
+        localStorage.removeItem('token')
         socket.emit("disconnected")
-        return navigate('/connexion', { replace: true })
+
     }
 
     const [nombre_article_en_attente, setNombre_article_en_attente] = useState(0)
     const [nombre_des_notifications, setnombre_des_notifications] = useState(0)
     useEffect(() => {
-        socket.on("mettre_a_jour_liste_des_articles_en_attente", () => {
+        socket?.on("mettre_a_jour_liste_des_articles_en_attente", () => {
             dispatch(liste_des_articles_en_attente()).then(action => { setNombre_article_en_attente(action.payload.article.length) })
             dispatch(liste_des_notifications_non_vu()).then(action => setnombre_des_notifications(action.payload.notification.length))
         })

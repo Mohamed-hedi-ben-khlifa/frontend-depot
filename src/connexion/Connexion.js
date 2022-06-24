@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { auth } from '../store/userSlice'
 import { useNavigate } from 'react-router-dom'
 
-const Connexion = (props) => {
+const Connexion = () => {
 
     let navigate = useNavigate();
     const dispatch = useDispatch()
@@ -26,32 +26,31 @@ const Connexion = (props) => {
 
         dispatch(auth(user)).then(action => {
 
-            localStorage.setItem("user", JSON.stringify(action.payload.user))
+            console.log(action)
+            localStorage.setItem("token", action.payload.token)
 
-            if (action.payload.user.role === 'admin') {
-                props.setUser(action.payload.user)
+            if (action.payload.user.role === "Gérant") {
+                navigate('/gerant/caisse', { replace: true })
+                console.log("action")
+            }
+
+            if (action.payload.user.role === "admin") {
                 navigate('/caisse', { replace: true })
-            } else
-                if (action.payload.user.role === 'deposant') {
-                    navigate('/deposant/articles', { replace: true })
-                    props.setUser(action.payload.user)
-                } else
-                    if (action.payload.user.role === 'Vendeur') {
-                        navigate('/vendeur/caisse', { replace: true })
-                        props.setUser(action.payload.user)
-                    } else
-                        if (action.payload.user.role === 'Gérant') {
-                            navigate('/gerant/caisse', { replace: true })
-                            props.setUser(action.payload.user)
-                        }
-                        else {
-                            navigate("/connexion", { replace: true })
-                        }
+                console.log("action")
+            }
+
+            if (action.payload.user.role === "Vendeur") {
+                navigate('/vendeur/caisse', { replace: true })
+                console.log("action")
+            }
+
+        
+          
         })
     }
 
     return (
-        <div style={{marginTop: '-1.05%'}}>
+        <div style={{ marginTop: '-1.05%' }}>
             <div className="container position-sticky z-index-sticky top-0">
                 <div className="row">
                     <div className="col-12">
@@ -78,7 +77,7 @@ const Connexion = (props) => {
                                                 <input type="email" className=" form-control  " placeholder='Email' name="email" value={user.email} onChange={handleChange} />
                                             </div>
                                             <div className="input-group input-group-dynamic mb-3">
-                                                <label className="form-label">Passsssssssssword</label>
+                                                <label className="form-label">Password</label>
                                                 <input type="password" className="form-control" name="pasword" value={user.pasword} onChange={handleChange} />
                                             </div>
                                             {!valid ? <p className='text-primary text_start'> Adresse email ou mot de passe inncorrect !! </p> : <p></p>}

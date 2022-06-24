@@ -29,8 +29,7 @@ export default function SideBar(props) {
     
     const logout = () => {
 
-        localStorage.removeItem('user')
-        props.setUser(null)
+        localStorage.removeItem('token')
         socket.emit("disconnected")
         return navigate('/connexion', { replace: true })
     }
@@ -239,70 +238,22 @@ export default function SideBar(props) {
                 <aside className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-white ps bg-white" id="sidenav-main" >
                     <div className="sidenav-header">
                         <i className="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" />
-                        <span className="navbar-brand m-0"  >
-                            <img src={boutique?.logo} className="navbar-brand-img h-100" alt="main_logo" style={{ marginTop: "-8%", marginRight: "6%" }} />
+                        <a className="navbar-brand m-0"  >
+                            <img src={boutique?.logo} className="navbar-brand-img h-100" alt="main_logo" style={{ marginTop: "-8%", marginRight: "6%" ,marginLeft: "-8%" }} />
+    
                             <span className="ms-1 font-weight-bold " style={{ color: "#111", fontFamily: 'Indie Flower', fontweight: '700', fontSize: "200%" }}>{boutique?.nom} </span>
-                        </span>
+                        </a>
                     </div>
                     <hr className="horizontal dark mt-0 mb-0" />
                     <div className="collapse navbar-collapse  w-auto  " id="sidenav-collapse-main" style={{ height: '100%' }}>
                         <hr className="horizontal dark mt-0 px-1 mb-2" />
                         <ul className="navbar-nav">
-                            <li className="nav-item " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
-                                <h6 className=" text-dark text-start text-xs font-weight-bolder opacity-10">Liste des pages</h6>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!caisse ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/caisse" onClick={() => { caisses() }}>
-                                    <div className="text-dark text-start me-2 d-flex align-items-start justify-content-start">
-                                        <i className="material-icons opacity-10">point_of_sale</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1" >Caisse de vente</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!dashboard ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/dashboard" onClick={() => { dashboards() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">dashboard</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1" >Tableau de bord</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!notification ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/notification/liste" onClick={() => { notifications() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">notifications</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1">Notifications</span>
-                                    {
-                                        nombre_des_notifications > 0 ?
-                                            <span className="badge bg-gradient-primary " style={{ marginLeft: "20%" }}>{nombre_des_notifications}</span> : <span></span>
-                                    }
-                                </Link>
-                            </li>
-                            <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
-                                <h6 className=" text-dark text-xs text-start font-weight-bolder opacity-10">Parametres Des Déposants</h6>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!ajouter_deposant ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="deposant/ajouter_deposant" onClick={() => { ajouter_deposants() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">person_add</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1" >Ajouter déposant</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!deposant ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/deposant/list" onClick={() => { deposants() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">people</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1" >Liste des déposant</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
+    
+                        <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
                                 <h6 className=" text-dark text-start text-xs font-weight-bolder opacity-10">Parametres Des Articles</h6>
                             </li>
                             <li className="nav-item">
-                                <Link className={!ajouter_article ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/article/ajouter" onClick={() => { ajouter_articles() }}>
+                                <Link className={!ajouter_article ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/article/ajouter" onClick={() => { ajouter_articles() }}>
                                     <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                                         <i className="material-icons opacity-10">add_shopping_cart</i>
                                     </div>
@@ -310,63 +261,101 @@ export default function SideBar(props) {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={!article ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/article/list" onClick={() => { articles() }}>
+                                <Link className={!article ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/article/list" onClick={() => { articles() }}>
                                     <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                                         <i className="material-icons opacity-10">list_alt</i>
                                     </div>
                                     <span className="nav-link-text ms-1">Liste des articles</span>
                                 </Link>
                             </li>
+    
                             <li className="nav-item">
-                                <Link className={!rendez_vous ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/admin/article/enAttente" onClick={() => { rendez_vouss() }}>
+                                <Link className={!rendez_vous ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/article/enAttente" onClick={() => { rendez_vouss() }}>
                                     <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                                         <i className="material-icons opacity-10">update</i>
                                     </div>
                                     <span className="nav-link-text ms-1">Article en attente</span>
-                                    {
-                                        nombre_article_en_attente > 0 ?
-                                            <span className="badge bg-gradient-primary " style={{ marginLeft: "4%" }}>{nombre_article_en_attente}</span> : <span></span>
-                                    }
                                 </Link>
                             </li>
+                            <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
+                                <h6 className=" text-dark text-xs text-start font-weight-bolder opacity-10">Parametres Des Déposants</h6>
+                            </li>
+                            <li className="nav-item">
+                                <Link className={!ajouter_deposant ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/deposant/ajouter" onClick={() => { ajouter_deposants() }}>
+                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i className="material-icons opacity-10">person_add</i>
+                                    </div>
+    
+                                    <span className="nav-link-text ms-1" >Ajouter déposant</span>
+                                </Link>
+                            </li>
+     
+                            <li className="nav-item">
+                                <Link className={!deposant ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/deposant/list" onClick={() => { deposants() }}>
+                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i className="material-icons opacity-10">people</i>
+                                    </div>
+    
+                                    <span className="nav-link-text ms-1" >Liste des déposant</span>
+                                </Link>
+                            </li>
+                          
+                            
+                            <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
+                                <h6 className=" text-dark text-start text-xs font-weight-bolder opacity-10">Parametres Des Notifications</h6>
+                            </li>
+                            <li className="nav-item">
+                                <Link className={!notification ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/notification/liste" onClick={() => { notifications() }}>
+                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i className="material-icons opacity-10">notifications</i>
+                                    </div>
+                                    <span className="nav-link-text ms-1">Liste Des Notifications</span>
+                                </Link>
+                            </li>
+                           
+                            
+    
+                           
                             <li className="nav-item mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
                                 <h6 className=" text-dark text-start text-xs font-weight-bolder opacity-10">Parametres Des Reçus</h6>
                             </li>
                             <li className="nav-item">
-                                <Link className={!recu ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/recu/deposer" onClick={() => { recus() }}>
+                                <Link className={!recu ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/recu" onClick={() => { recus() }}>
                                     <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                                         <i className="material-icons opacity-10">description</i>
                                     </div>
                                     <span className="nav-link-text ms-1">Liste des reçus</span>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className={!payment ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/recu/verser" onClick={() => { payments() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">payments</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1">Reçus verser</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={!store ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/recu/caisse" onClick={() => { stores() }}>
-                                    <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i className="material-icons opacity-10">request_quote</i>
-                                    </div>
-                                    <span className="nav-link-text ms-1">Reçus de caisse</span>
-                                </Link>
-                            </li>
+    
                             <li className="nav-item  mt-2 " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
                                 <h6 className="text-start text-xs font-weight-bolder opacity-10">Parametres De Profile</h6>
                             </li>
+    
                             <li className="nav-item">
-                                <Link className={!profile ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/boutique" onClick={() => { profiles() }}>
+                                <Link className={!profile ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/boutique" onClick={() => { profiles() }}>
                                     <div className="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                                         <i className="material-icons opacity-10">storefront</i>
                                     </div>
                                     <span className="nav-link-text ms-1">Profile de boutique</span>
                                 </Link>
                             </li>
+                            <li className="nav-item " style={{ marginBottom: '-3%', marginLeft: '8%' }}>
+                                <h6 className=" text-dark text-start text-xs font-weight-bolder opacity-10">Parametres De Caisse</h6>
+                            </li>
+    
+    
+                            <li className="nav-item">
+                                <Link className={!caisse ? 'nav-link text-dark' : 'nav-link text-white active bg-gradient-dark'} to="/gerant/caisse" onClick={() => { caisses() }}>
+                                    <div className="text-dark text-start me-2 d-flex align-items-start justify-content-start">
+                                        <i className="material-icons opacity-10">point_of_sale</i>
+                                    </div>
+                                    <span className="nav-link-text ms-1" >Caisse de vente</span>
+                                </Link>
+    
+                            </li>
+    
+                            
                         </ul>
                         <div className="sidenav-footer position-absolute w-auto bottom-0 ">
                             <Link className="nav-link text-dark m-4" to="/connexion" onClick={() => logout()}>
@@ -376,8 +365,11 @@ export default function SideBar(props) {
                                 </div>
                             </Link>
                         </div>
+    
                     </div>
                 </aside>
+    
+    
             </div>
         )
     }
