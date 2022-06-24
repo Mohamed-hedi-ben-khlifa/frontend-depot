@@ -73,7 +73,7 @@ function App() {
         if (user?.role === "Gérant"  && token?.length > 0) {navigate('/gerant/caisse')}
         if (user?.role === "admin" && token?.length > 0) { navigate('/caisse')}
     
-  }, [user])
+  }, [user,token,dispatch])
 
 
   useEffect(() => {

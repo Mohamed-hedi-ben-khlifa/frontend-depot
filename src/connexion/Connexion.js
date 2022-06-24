@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { auth } from '../store/userSlice'
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,7 @@ const Connexion = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch()
     const [valid, setvalid] = useState(true)
+    const [auth_user, setauth_user] = useState()
     const [user, setUser] = useState({
         email: "",
         pasword: "",
@@ -26,28 +27,32 @@ const Connexion = () => {
 
         dispatch(auth(user)).then(action => {
 
-            console.log(action)
             localStorage.setItem("token", action.payload.token)
-
-            if (action.payload.user.role === "Gérant") {
-                navigate('/gerant/caisse', { replace: true })
-                console.log("action")
-            }
-
-            if (action.payload.user.role === "admin") {
-                navigate('/caisse', { replace: true })
-                console.log("action")
-            }
-
-            if (action.payload.user.role === "Vendeur") {
-                navigate('/vendeur/caisse', { replace: true })
-                console.log("action")
-            }
-
-        
-          
+            setauth_user(action.payload.user)
         })
     }
+
+
+    useEffect(() => {
+
+        console.log(auth_user);
+
+        if (auth_user.role === "Gérant") {
+            navigate('/gerant/caisse')
+            console.log("action")
+        }
+
+        if (auth_user.role === "admin") { 
+            navigate('/caisse')
+            console.log("action")
+        }
+
+        if (auth_user.role === "Vendeur") {
+            navigate('/vendeur/caisse')
+            console.log("action")
+        }
+        
+    },[auth_user,dispatch])
 
     return (
         <div style={{ marginTop: '-1.05%' }}>
