@@ -3,6 +3,8 @@ import axios from 'axios'
 
 
 
+const token = localStorage.getItem("token")
+
 
 export const auth = createAsyncThunk('user/connexion',async (user,thunkAPI)=>{
     try{
@@ -18,7 +20,7 @@ export const auth = createAsyncThunk('user/connexion',async (user,thunkAPI)=>{
 
 export const socket = createAsyncThunk('user/socket',async (user,thunkAPI)=>{
     try{
-        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/User/socket',user)
+        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/User/socket', { headers: { authorization :  `Bearer ${token}` } },user)
         const data = await resp.data
         return data       
     }
@@ -30,7 +32,7 @@ export const socket = createAsyncThunk('user/socket',async (user,thunkAPI)=>{
 
 export const get_employées = createAsyncThunk('user/get_employées',async (_,thunkAPI)=>{
     try{
-        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/User/liste_des_employees')
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/User/liste_des_employees', { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -41,7 +43,7 @@ export const get_employées = createAsyncThunk('user/get_employées',async (_,th
 })
 
 export const rechercher_user_par_token = createAsyncThunk('user/rechercher_user_par_token',async (_,thunkAPI)=>{
-    const token = localStorage.getItem("token")
+    
     try{
 
    

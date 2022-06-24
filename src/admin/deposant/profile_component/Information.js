@@ -1,21 +1,27 @@
 import React, { useContext } from 'react'
 import { SocketContext } from '../../../context/socket';
 import { upload_image_deposant } from '../../../store/deposantSlice';
+import { useDispatch } from 'react-redux'
 
 export default function Information(props) {
 
   const socket = useContext(SocketContext);
-
+  const dispatch = useDispatch()
   const fileChange = e => {
 
-    const image = new FormData()
+    const image = new FormData() 
     image.append('image', e.target.files[0])
+    const params={
+      id:props.deposant._id,
+      image:image
+    }
     
-    dispatchEvent(upload_image_deposant(image,props.deposant._id)).then((action) => {
+    dispatch(upload_image_deposant(params)).then((action) => {
       socket.emit("mettre_a_jour_photo_de_profile")
+      console.log(action)
       props.setDeposant(prevState => ({
         ...prevState,
-        image: 'http://localhost:4040/' + action.payload.file.filename
+        image: "http://localhost:4040/"+ action.payload.file.filename
       }))
     })
   }

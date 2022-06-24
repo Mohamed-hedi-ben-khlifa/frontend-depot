@@ -1,12 +1,12 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 
-
+const token = localStorage.getItem("token")
 
 
 export const getNotifications = createAsyncThunk('notification/getNotifications',async (_,thunkAPI)=>{
     try{
-        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/liste_des_notifications')
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/liste_des_notifications', { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -19,7 +19,7 @@ export const getNotifications = createAsyncThunk('notification/getNotifications'
 export const addNotifications = createAsyncThunk('notification/addNotifications',async (notification,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-        const resp =await axios.post(process.env.REACT_APP_BASE_URL+'/api/Notification/ajouter', notification)
+        const resp =await axios.post(process.env.REACT_APP_BASE_URL+'/api/Notification/ajouter', notification, { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -32,7 +32,7 @@ export const addNotifications = createAsyncThunk('notification/addNotifications'
 export const deleteNotifications = createAsyncThunk('notification/deleteNotifications',async (id,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-         await axios.delete(process.env.REACT_APP_BASE_URL+'/api/Notification/delete/'+id)
+         await axios.delete(process.env.REACT_APP_BASE_URL+'/api/Notification/delete/'+id, { headers: { authorization :  `Bearer ${token}` } })
           
         return id 
     }
@@ -45,7 +45,7 @@ export const deleteNotifications = createAsyncThunk('notification/deleteNotifica
 export const getNotification = createAsyncThunk('notification/getNotification',async (notification,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/rechercher_notification_par_id/'+ notification._id)
+        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/rechercher_notification_par_id/'+ notification._id, { headers: { authorization :  `Bearer ${token}` } })
         const data  = await res.data    
         return data 
     }
@@ -58,7 +58,7 @@ export const getNotification = createAsyncThunk('notification/getNotification',a
 export const rechercher_notification_par_ref = createAsyncThunk('notification/rechercher_notification_par_ref',async (ref,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/rechercher_notification_par_ref/'+ ref)
+        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/rechercher_notification_par_ref/'+ ref, { headers: { authorization :  `Bearer ${token}` } })
         const data  = await res.data    
         return data 
     }
@@ -71,7 +71,7 @@ export const rechercher_notification_par_ref = createAsyncThunk('notification/re
 export const vuNotifications = createAsyncThunk('notification/vuNotifications',async (id,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-        const resp =await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Notification/mettre_a_jou_status_notification_vu/'+id)
+        const resp =await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Notification/mettre_a_jou_status_notification_vu/'+id, { headers: { authorization :  `Bearer ${token}` } })
         const x = await resp.data
         return x       
     }
@@ -84,7 +84,7 @@ export const vuNotifications = createAsyncThunk('notification/vuNotifications',a
 export const liste_des_notifications_non_vu = createAsyncThunk('notification/liste_des_notifications_non_vu',async (_,thunkAPI)=>{
     const{rejectWithValue} = thunkAPI
     try{
-        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/liste_des_notifications_non_vu')
+        const res =  await axios.get(process.env.REACT_APP_BASE_URL+'/api/Notification/liste_des_notifications_non_vu', { headers: { authorization :  `Bearer ${token}` } })
         const data  = await res.data    
         return data 
     }

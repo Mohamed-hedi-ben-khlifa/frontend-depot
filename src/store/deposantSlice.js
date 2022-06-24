@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const token = localStorage.getItem("token")
+
 
 export const get_deposants = createAsyncThunk('deposant/get_deposants', async (_, thunkAPI) => {
     try {
-        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/')
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/', { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data
     }
@@ -17,7 +19,7 @@ export const get_deposants = createAsyncThunk('deposant/get_deposants', async (_
 export const ajouter_deposant = createAsyncThunk('deposant/ajouter_deposant', async (deposant, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/Deposant/ajouter', deposant)
+        const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/Deposant/ajouter', deposant, { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data
     }
@@ -30,7 +32,7 @@ export const ajouter_deposant = createAsyncThunk('deposant/ajouter_deposant', as
 export const supprimer_deposant = createAsyncThunk('deposant/supprimer_deposant', async (deposant, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.delete(process.env.REACT_APP_BASE_URL+'/api/Deposant/delete/' + deposant._id)
+        const res = await axios.delete(process.env.REACT_APP_BASE_URL+'/api/Deposant/delete/' + deposant._id, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -43,7 +45,7 @@ export const supprimer_deposant = createAsyncThunk('deposant/supprimer_deposant'
 export const rechercher_deposant_par_telephone = createAsyncThunk('deposant/rechercher_deposant_par_telephone', async (telephone, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/rechercher_deposant_par_telephone/' + telephone)
+        const res = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/rechercher_deposant_par_telephone/' + telephone, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -56,7 +58,7 @@ export const rechercher_deposant_par_telephone = createAsyncThunk('deposant/rech
 export const rechercher_deposant_par_id = createAsyncThunk('deposant/rechercher_deposant_par_telephone', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/rechercher_deposant_par_id/' + id)
+        const res = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/rechercher_deposant_par_id/' + id, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -66,16 +68,16 @@ export const rechercher_deposant_par_id = createAsyncThunk('deposant/rechercher_
 
 })
 
-export const upload_image_deposant = createAsyncThunk('deposant/rechercher_deposant_par_telephone', async ({image,id}, thunkAPI) => {
+export const upload_image_deposant = createAsyncThunk('deposant/upload_image_deposant', async (params, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
 
     const config = {
       headers: {
-        'content-type': 'multipart/form-data'
+        'content-type': 'multipart/form-data'     
       }
     }
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/Boutique/logo/' + id, image, config)
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Deposant/upload/' + params.id, params.image, config)
         const data = await res.data
         return data
     }

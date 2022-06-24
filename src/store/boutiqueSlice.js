@@ -1,11 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 
-
+const token = localStorage.getItem("token")
 
 export const information = createAsyncThunk('boutique/information',async (_,thunkAPI)=>{
     try{
-        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Boutique/')
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Boutique/', { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -17,7 +17,7 @@ export const information = createAsyncThunk('boutique/information',async (_,thun
 
 export const modifier_pofit_des_articles_deposant = createAsyncThunk('boutique/modifier_pofit_des_articles_deposant',async (boutique,thunkAPI)=>{
     try{
-        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier_pofit_des_articles_deposant/'+boutique._id,boutique)
+        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier_pofit_des_articles_deposant/'+boutique._id,boutique, { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -29,7 +29,7 @@ export const modifier_pofit_des_articles_deposant = createAsyncThunk('boutique/m
 
 export const modifier_nom_boutique = createAsyncThunk('boutique/modifier_nom_boutique',async (boutique,thunkAPI)=>{
     try{
-        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier_non_du_boutique/'+boutique._id,boutique)
+        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier_non_du_boutique/'+boutique._id,boutique, { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -41,7 +41,7 @@ export const modifier_nom_boutique = createAsyncThunk('boutique/modifier_nom_bou
 
 export const modifier_boutique = createAsyncThunk('boutique/modifier_boutique',async (boutique,thunkAPI)=>{
     try{
-        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier/'+boutique._id,boutique)
+        const resp = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/modifier/'+boutique._id,boutique, { headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }
@@ -58,7 +58,8 @@ export const upload_logo_boutique = createAsyncThunk('boutique/upload_logo_bouti
 
     const config = {
       headers: {
-        'content-type': 'multipart/form-data'
+        'content-type': 'multipart/form-data',
+        authorization :  `Bearer ${token}`
       }
     }
         const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Boutique/logo/' + b.id, b.image, config)
