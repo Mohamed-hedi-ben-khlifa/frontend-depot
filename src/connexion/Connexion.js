@@ -37,17 +37,17 @@ const Connexion = () => {
 
         console.log(auth_user);
 
-        if (auth_user.role === "Gérant") {
+        if (auth_user?.role === "Gérant") {
             navigate('/gerant/caisse')
             console.log("action")
         }
 
-        if (auth_user.role === "admin") { 
+        if (auth_user?.role === "admin") { 
             navigate('/caisse')
             console.log("action")
         }
 
-        if (auth_user.role === "Vendeur") {
+        if (auth_user?.role === "Vendeur") {
             navigate('/vendeur/caisse')
             console.log("action")
         }
