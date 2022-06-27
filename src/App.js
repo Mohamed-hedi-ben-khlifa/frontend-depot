@@ -71,6 +71,7 @@ function App() {
 
         console.log(user)
         if (user?.role === "Gérant"  && token?.length > 0) {navigate('/gerant/caisse')}
+        if (user?.role === "Vendeur" && token?.length > 0) { navigate('/vendeur/caisse')}
         if (user?.role === "admin" && token?.length > 0) { navigate('/caisse')}
         if (!user || !token) { navigate('/connexion')}
 

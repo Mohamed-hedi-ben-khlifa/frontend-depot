@@ -21,7 +21,7 @@ export default function Information(props) {
       console.log(action)
       props.setDeposant(prevState => ({
         ...prevState,
-        image: "http://localhost:4040/"+ action.payload.file.filename
+        image: process.env.REACT_APP_BASE_URL+"/"+ action.payload.file.filename
       }))
     })
   }

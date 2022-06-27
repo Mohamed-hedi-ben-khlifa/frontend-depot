@@ -258,7 +258,7 @@ export default function Articles() {
                 <p className="text-start text-primary mt-3">{message}</p>
               </div>
               <div className="col-2">
-                <Link className="btn bg-gradient-dark btn-icon col-10 text-center" to="/article/ajouter" >
+                <Link className="btn bg-gradient-dark btn-icon col-10 text-center" to="/vendeur/article/ajouter" >
                   <div className="d-flex align-items-center" style={{ marginLeft: '22%' }}>
                     Ajouter
                     <i className="material-icons ms-2" aria-hidden="true">add</i>

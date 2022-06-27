@@ -409,7 +409,7 @@ export const rechercher_liste_des_article_par_etat = createAsyncThunk('article/r
 export const update_status_reversement = createAsyncThunk('article/update_status_reversement', async (article, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/modifier_status_reversement/' + article._id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/modifier_status_reversement/' + article._id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -422,7 +422,7 @@ export const update_status_reversement = createAsyncThunk('article/update_status
 export const accepter_un_article_postuler_par_deposant = createAsyncThunk('article/accepter_un_article_postuler_par_deposant', async (article, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/accepter_un_article_postuler_par_deposant/' + article._id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/accepter_un_article_postuler_par_deposant/' + article._id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -436,7 +436,7 @@ export const accepter_un_article_postuler_par_deposant = createAsyncThunk('artic
 export const refuser_un_article_postuler_par_deposant = createAsyncThunk('article/refuser_un_article_postuler_par_deposant', async (article, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/refuser_un_article_postuler_par_deposant/' + article._id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/refuser_un_article_postuler_par_deposant/' + article._id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -449,7 +449,7 @@ export const refuser_un_article_postuler_par_deposant = createAsyncThunk('articl
 export const retour_produit_depuis_client = createAsyncThunk('article/retour_produit_depuis_client', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/retour_produit_depuis_client/' + id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/retour_produit_depuis_client/' + id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -462,7 +462,7 @@ export const retour_produit_depuis_client = createAsyncThunk('article/retour_pro
 export const retour_produit_vers_deposant = createAsyncThunk('article/retour_produit_vers_deposant', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/retour_produit_vers_deposant/' + id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/retour_produit_vers_deposant/' + id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
@@ -474,14 +474,14 @@ export const retour_produit_vers_deposant = createAsyncThunk('article/retour_pro
 export const modifier_status_vendu_d_un_article = createAsyncThunk('article/modifier_status_vendu', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/modifier_status_vendu/' + id, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/modifier_status_vendu/' + id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
         return data
     }
     catch (error) {
         return rejectWithValue(error.message)
     }
-
+ 
 })
 
 export const supprimer_article = createAsyncThunk('article/supprimer_article',async (id,thunkAPI)=>{
