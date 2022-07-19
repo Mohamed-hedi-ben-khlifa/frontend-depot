@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { liste_des_article_non_verser, update_status_reversement } from '../../../store/articleSlice'
 import { ajouter_reçu } from '../../../store/reçuSlice'
-
+import { SocketContext } from '../../../context/socket';
 
 export default function Liste_des_article_non_verser(props) {
 
@@ -10,6 +10,8 @@ export default function Liste_des_article_non_verser(props) {
     const [etat, setEtat] = useState(0)
     const [total, setTotal] = useState(0)
     const dispatch = useDispatch()
+    const socket = useContext(SocketContext);
+
     const d = new Date()
 
     const afficher = () => { if (etat === 0) { setEtat(1) } else { setEtat(0) } }
@@ -31,12 +33,14 @@ export default function Liste_des_article_non_verser(props) {
             total: t,
             total_a_verser: t - ((t * boutique?.taux) / 100),
             date_reçu: new Date(d.getFullYear(), d.getMonth(), d.getDay())
+           
         }
 
         dispatch(liste_des_article_non_verser(props.deposant._id)).then(action => props.setArticles_non_verser(action.payload.article))
         dispatch(ajouter_reçu(reçu))
         setEtat(0)
         print()
+        socket.emit("mettre_a_jour_liste_des_reçus")
     }
 
     async function print() {

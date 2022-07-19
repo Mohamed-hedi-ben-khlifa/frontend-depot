@@ -55,7 +55,7 @@ export const rechercher_deposant_par_telephone = createAsyncThunk('deposant/rech
 
 })
 
-export const rechercher_deposant_par_id = createAsyncThunk('deposant/rechercher_deposant_par_telephone', async (id, thunkAPI) => {
+export const rechercher_deposant_par_id = createAsyncThunk('deposant/rechercher_deposant_par_id', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
         const res = await axios.get(process.env.REACT_APP_BASE_URL+'/api/Deposant/rechercher_deposant_par_id/' + id, { headers: { authorization :  `Bearer ${token}` } })

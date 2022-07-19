@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ajouter_article, liste_des_article_de_deposant, supprimer_article } from '../../../store/articleSlice'
 import { ajouter_reçu } from '../../../store/reçuSlice'
 import Barcode from 'react-barcode';
+import { SocketContext } from '../../../context/socket';
 
 export default function Ajouter_article(props) {
 
     const dispatch = useDispatch()
     const { boutique } = useSelector((state) => state.boutique)
     const [total, setTotal] = useState()
+    const socket = useContext(SocketContext);
     const d = new Date(Date.now())
     const [articles, setArticles] = useState([])
     const [article, setArticle] = useState({
@@ -92,6 +94,8 @@ export default function Ajouter_article(props) {
         dispatch(ajouter_reçu(reçu))
         print()
         setArticles([])
+
+        socket.emit("mettre_a_jour_liste_des_reçus")
     }
 
     async function print() {

@@ -206,8 +206,9 @@ export default function Articles() {
         'content-type': 'multipart/form-data'
       }
     }
-    axios.patch('http://localhost:4040/Article/upload/' + article._id, photos, config).then((data) => {
+    axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/upload/' + article._id, photos, config).then((data) => {
       dispatch(liste_des_articles()).then(action => setArticles(action.payload.article))
+      socket.emit("mettre_a_jour_photo_de_profile")
     })
   }
 
@@ -386,7 +387,7 @@ export default function Articles() {
                       <img
                         className="w-60 min-height-250 max-height-250   border-radius-lg ms-2"
                         data-size="500x600"
-                        src={article.image.length > 0 ? "http://localhost:4040/" + article.image[0].filename : "../../assets/img/image.png"}
+                        src={article.image.length > 0 ? process.env.REACT_APP_BASE_URL+'/' + article.image[0].filename : "../../assets/img/image.png"}
                         style={{ padding: article.image.length > 0 ? ' 0%  ' : ' 12%', background: article.image.length > 0 ? '#transparent' : '#F5F5F5', marginTop: '-10%' }}
                       />
                     </a>
@@ -395,7 +396,7 @@ export default function Articles() {
                         <a >
                           <img
                             className="w-100 min-height-100 max-height-100 border-radius-lg "
-                            src={article.image.length > 1 ? "http://localhost:4040/" + article.image[1].filename : "../../assets/img/image.png"}
+                            src={article.image.length > 1 ? process.env.REACT_APP_BASE_URL+'/' + article.image[1].filename : "../../assets/img/image.png"}
                             alt="Image description"
                             loading="lazy"
                             style={{ padding: article.image.length > 1 ? ' 0%  ' : ' 20%', background: article.image.length > 1 ? '#transparent' : '#F5F5F5' }}
@@ -406,7 +407,7 @@ export default function Articles() {
                         <a  itemProp="contentUrl" data-size="500x600">
                           <img
                             className="w-100 min-height-100 max-height-100 border-radius-lg "
-                            src={article.image.length > 2 ? "http://localhost:4040/" + article.image[2].filename : "../../assets/img/image.png"}
+                            src={article.image.length > 2 ? process.env.REACT_APP_BASE_URL+'/' + article.image[2].filename : "../../assets/img/image.png"}
                             alt="Image description"
                             loading="lazy"
                             style={{ padding: article.image.length > 2 ? ' 0%  ' : ' 20%', background: article.image.length > 2 ? '#transparent' : '#F5F5F5' }}
@@ -417,7 +418,7 @@ export default function Articles() {
                         <a  itemProp="contentUrl" data-size="500x600">
                           <img
                             className="w-100 min-height-100 max-height-100 border-radius-lg "
-                            src={article.image.length > 3 ? "http://localhost:4040/" + article.image[3].filename : "../../assets/img/image.png"}
+                            src={article.image.length > 3 ? process.env.REACT_APP_BASE_URL+'/' + article.image[3].filename : "../../assets/img/image.png"}
                             alt="Image description"
                             loading="lazy"
                             style={{ padding: article.image.length > 3 ? ' 0%  ' : ' 20%', background: article.image.length > 3 ? '#transparent' : '#F5F5F5' }}

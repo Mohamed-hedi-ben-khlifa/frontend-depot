@@ -51,6 +51,18 @@ export const modifier_boutique = createAsyncThunk('boutique/modifier_boutique',a
 
 })
 
+export const ajouter_boutique = createAsyncThunk('boutique/modifier_boutique',async (boutique,thunkAPI)=>{
+    try{
+        const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/Boutique/ajouter',boutique, { headers: { authorization :  `Bearer ${token}` } })
+        const data = await resp.data
+        return data       
+    }
+    catch(error){
+        console.error(error)
+    }
+
+})
+
 
 export const upload_logo_boutique = createAsyncThunk('boutique/upload_logo_boutique', async (b, thunkAPI) => {
     const { rejectWithValue } = thunkAPI

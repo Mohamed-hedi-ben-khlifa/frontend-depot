@@ -29,6 +29,7 @@ export default function Liste_des_articles_en_attente() {
       dispatch(liste_des_articles_en_attente()).then(action => {
         setNombre_article_en_attente(action.payload.article.length)
         setArticles(action.payload.article)
+      
       })
     })
 
@@ -38,57 +39,52 @@ export default function Liste_des_articles_en_attente() {
     dispatch(liste_des_articles_en_attente()).then(action => {
       setNombre_article_en_attente(action.payload.article.length)
       setArticles(action.payload.article)
+      console.log(action.payload.article);
     })
 
   }, [, dispatch])
 
 
 
-  const accepter = async (id) => {
-
-    dispatch(accepter_un_article_postuler_par_deposant(id))
-    socket.emit("accepter_un_article")
-    dispatch(liste_des_articles_en_attente()).then(action => {
-
-      setNombre_article_en_attente(action.payload.article.length)
-      setArticles(action.payload.article)
-
-      dispatch(rechercher_deposant_par_id(article.user_id)).then(action => {
-        let notification = {
-          article: article,
-          user: action.payload.deposant,
-          body: "Vous avez un Rendez_vous",
-          date_creation: new Date(),
-          date_rendez_vous: Rendez_vous.date
-        }
-        dispatch(addNotifications(notification))
+  const accepter = async (article) => {
+   
+console.log(article);
+    dispatch(accepter_un_article_postuler_par_deposant(article._id))
+      dispatch(liste_des_articles_en_attente()).then(action => {
+       
+        setNombre_article_en_attente(action.payload.article.length)
+        setArticles(action.payload.article)
+  
+        dispatch(rechercher_deposant_par_id(article.user_id)).then(action => {
+          let notification = {
+            article: article,
+            user: action.payload.deposant,
+            body: "Vous avez un Rendez_vous",
+            date_creation: new Date(),
+            date_rendez_vous: Rendez_vous.date
+          }
+          dispatch(addNotifications(notification))
+        })
+        socket.emit("accepter_un_article")
       })
-      socket.emit("accepter_un_article")
-    })
+   
+    socket.emit("accepter_un_article")
+    
   }
 
-  async function refuser(id) {
+  async function refuser(article) {
 
-    dispatch(refuser_un_article_postuler_par_deposant(id))
-    socket.emit("accepter_un_article")
-    dispatch(liste_des_articles_en_attente()).then(action => {
-
-      setNombre_article_en_attente(action.payload.article.length)
-      setArticles(action.payload.article)
-
-      dispatch(rechercher_deposant_par_id(article.user_id)).then(action => {
-        let notification = {
-          article: article,
-          user: action.payload.deposant,
-          body: "Vorte article est refuser",
-          date_creation: new Date()
-
-        }
-        dispatch(addNotifications(notification))
+    dispatch(refuser_un_article_postuler_par_deposant(article._id)).then(actions => {
+      console.log(actions.payload);
+      
+      dispatch(liste_des_articles_en_attente()).then(action => {
+        setNombre_article_en_attente(action.payload.article.length)
+        setArticles(action.payload.article)
       })
-      socket.emit("refuser_un_article")
-    })
-  }
+    socket.emit("refuser_un_article")
+   
+  })
+}
 
   const formatDate = (date) => {
     var d = new Date(date),
@@ -126,9 +122,7 @@ export default function Liste_des_articles_en_attente() {
 
 
   const rendez_vous = () => {
-
     dispatch(ajouter_un_rendez_vous(Rendez_vous)).then(() => { socket.emit("rendez_vous") })
-    accepter(article._id)
   }
 
 
@@ -167,51 +161,53 @@ export default function Liste_des_articles_en_attente() {
             <div className="card mt-4">
               <div className="card-body p-3">
                 <div className="table" >
-                  <table className="table align-items-center mb-0">
+                  <table className="table align-items-center mb-0 p-4">
                     <thead>
                       <tr>
-                        <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lib.article</th>
-                        <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Réf</th>
+                      <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Réf</th>
+                        <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lib.article</th>                      
                         <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Etat</th>
-                        <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Prix </th>
                         <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date dépot article</th>
+                        <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Prix </th>        
                         <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {articles?.map((article, index) =>
-                        <tr >
+                        <tr key={index} >
+                            <td className="align-middle text-center text-sm " >
+                            <span className="text-xm text-center text-primary font-weight-bold" > {article.ref}</span>
+                          </td>
                           <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                             <a href="#" onClick={() => afficher(article)} data-bs-toggle="modal" data-bs-target="#article">
                               <h6 className="mb-0 text-sm ">{article.lib === "" ? <span className="text-xs text-dark font-weight-bold">Article</span> : <span className="text-xs text-dark font-weight-bold">{article.lib}</span>}</h6>
                             </a>
                           </td>
-                          <td className="align-middle text-center text-sm " >
-                            <span className="text-xm text-center text-primary font-weight-bold" > {article.ref}</span>
-                          </td>
+                        
                           <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                             {article.etat === "Neuf" ? <span className="text-xs text-primary font-weight-bold">{article.etat}</span> : <span></span>}
                             {article.etat === "Bon etat" ? <span className="text-xs text-success font-weight-bold">{article.etat}</span> : <span></span>}
                             {article.etat === "Passable" ? <span className="text-xs text-dark font-weight-bold">{article.etat}</span> : <span></span>}
                             {article.etat === "" ? <span className="text-xs text-dark font-weight-bold">--------</span> : <span></span>}
                           </td>
-                          <td className="align-middle text-center text-sm">
-                            {article.prix_vente_ttc === null ? <span className="text-xs text-primary font-weight-bold">$ 0.000</span> : <span className="text-xs text-primary font-weight-bold">$ {(article.prix_vente_ttc)?.toFixed(3)}</span>}
-
-                          </td>
                           <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                             <span className="text-xs text-dark font-weight-bold"> {formatDate(article.date_depot)}</span>
                           </td>
                           <td className="align-middle text-center text-sm">
+                            {article.prix_vente_ttc === null ? <span className="text-xs text-primary font-weight-bold">$ 0.000</span> : <span className="text-xs text-primary font-weight-bold">$ {(article.prix_vente_ttc)?.toFixed(3)}</span>}
+
+                          </td>
+                         
+                          <td className="align-middle text-center text-sm">
                             <span className="text-xs font-weight-bold">
-                              <a className="avatar avatar-xs rounded-circle me-3" type="button" onClick={() => afficher(article)} data-bs-toggle="modal" data-bs-target="#Accepter">
+                              <a className="avatar avatar-xs rounded-circle me-3" type="button" onClick={() => accepter(article)} data-bs-toggle="modal" data-bs-target="#Accepter">
                                 <img src="../../assets/img/accept.jpg" alt="team5" />
                               </a>
                             </span>
                             <span className="text-xs font-weight-bold">
                               <a className="avatar avatar-xs rounded-circle me-3" type="button" onClick={() => {
                                 afficher(article)
-                                refuser(article._id)
+                                refuser(article)
 
                               }}>
                                 <img src="../../assets/img/refuser.jpg" alt="team5" />

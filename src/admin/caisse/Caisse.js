@@ -142,7 +142,7 @@ export default function Caisse() {
                                         </div>
                                         <div className="col-1">
                                             <div>
-                                                <img src={boutique?.logo} className="navbar-brand-img h-100 mt-4 " alt="main_logo" style={{ width: '90%', height: '90%' }} />
+                                                <img src={boutique?.logo ? boutique?.logo: '../../../assets/img/logo-ct-dark.png' } className="navbar-brand-img h-100 mt-4 " alt="main_logo" style={{ width: '90%', height: '90%' }} />
                                             </div>
                                         </div>
                                         <div className="col-3" />

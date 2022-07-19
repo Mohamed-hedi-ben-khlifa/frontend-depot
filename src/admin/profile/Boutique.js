@@ -84,7 +84,7 @@ export default function Boutique() {
                         <div className="card ">
                             <div className="about-avatar text-center " style={{ padding: '3%' }} >
                                 <a type="button" data-bs-toggle="modal" data-bs-target="#logo" >
-                                    <img className="img-center" src={boutique?.logo} style={{ width: '90px', height: '90px' }} />
+                                    <img className="img-center" src={boutique?.logo ? boutique?.logo: '../../../assets/img/logo-ct-dark.png' } style={{ width: '90px', height: '90px' }} />
                                     <h5 className="text-secondary  text-center mt-1 ">Logo de Boutique</h5>
                                 </a>
                             </div>

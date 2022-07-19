@@ -5,7 +5,7 @@ const token = localStorage.getItem("token")
 
 export const ajouter_un_rendez_vous = createAsyncThunk('rendez_vous/ajouter_un_rendez_vous',async (rendez_vous,thunkAPI)=>{
     try{
-        const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/Rendez_vous/ajouter', { headers: { authorization :  `Bearer ${token}` } },rendez_vous)
+        const resp = await axios.post(process.env.REACT_APP_BASE_URL+'/api/Rendez_vous/ajouter',rendez_vous,{ headers: { authorization :  `Bearer ${token}` } })
         const data = await resp.data
         return data       
     }

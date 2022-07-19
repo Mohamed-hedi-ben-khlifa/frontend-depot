@@ -40,7 +40,7 @@ import Boutique_gerant from './gerant/profile/Boutique'
 
 
 import { rechercher_user_par_token } from './store/userSlice';
-import { information } from './store/boutiqueSlice';
+
 
 import { Private_Routes_Admin } from './route/Private_Routes_Admin'
 import { Private_Routes_Gerant } from './route/Private_Routes_Gerant'
@@ -52,13 +52,14 @@ import { SocketContext, socket } from './context/socket'
 import { useDispatch } from 'react-redux';
 
 function App() {
+
   let navigate = useNavigate()
   const dispatch = useDispatch()
   const [user, setUser] = useState()
   const socket = useContext(SocketContext)
   const token = localStorage.getItem("token")
 
-  useEffect(() => { dispatch(information()) }, [dispatch])
+
 
   useEffect(() => {
     if (token?.length > 0) 
@@ -69,7 +70,6 @@ function App() {
 
   useEffect(() => {
 
-        console.log(user)
         if (user?.role === "Gérant"  && token?.length > 0) {navigate('/gerant/caisse')}
         if (user?.role === "Vendeur" && token?.length > 0) { navigate('/vendeur/caisse')}
         if (user?.role === "admin" && token?.length > 0) { navigate('/caisse')}
