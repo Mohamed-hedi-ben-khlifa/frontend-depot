@@ -83,7 +83,7 @@ export default function Information(props) {
                     <a href="#" data-bs-toggle="modal" data-bs-target="#profile" >
                       {
                         props.deposant.image ?
-                          <img className="w-100 min-height-400 max-height-400 " src={props.deposant.image} />
+                          <img className="w-100 min-height-400 max-height-400 " src={process.env.REACT_APP_BASE_URL+"/"+props.deposant.image} />
                           :
                           <img className="w-100 min-height-400 max-height-400 " src="../../assets/img/s.jpg" />
                       }

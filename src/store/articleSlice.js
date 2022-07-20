@@ -434,11 +434,12 @@ export const accepter_un_article_postuler_par_deposant = createAsyncThunk('artic
 })
 
 
-export const refuser_un_article_postuler_par_deposant = createAsyncThunk('article/refuser_un_article_postuler_par_deposant', async (article, thunkAPI) => {
+export const refuser_un_article_postuler_par_deposant = createAsyncThunk('article/refuser_un_article_postuler_par_deposant', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/refuser_un_article_postuler_par_deposant/' + article._id,{}, { headers: { authorization :  `Bearer ${token}` } })
+        const res = await axios.patch(process.env.REACT_APP_BASE_URL+'/api/Article/refuser_un_article_postuler_par_deposant/' + id,{}, { headers: { authorization :  `Bearer ${token}` } })
         const data = await res.data
+        console.log(res);
         return data
     }
     catch (error) {

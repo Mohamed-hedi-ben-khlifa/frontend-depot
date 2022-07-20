@@ -115,7 +115,7 @@ export default function Deposants() {
                               <div className="avatar avatar-xs rounded-circle me-3" key={index} data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
                                 {
                                   deposant.image ?
-                                    <img src={deposant.image} alt="team5" />
+                                    <img src={process.env.REACT_APP_BASE_URL+"/"+deposant.image} alt="team5" />
                                     : <img src="../assets/img/marie.jpg" alt="team5" />
                                 }
                               </div>

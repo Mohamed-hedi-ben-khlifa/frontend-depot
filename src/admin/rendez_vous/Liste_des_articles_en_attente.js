@@ -73,7 +73,7 @@ console.log(article);
   }
 
   async function refuser(article) {
-
+console.log(article._id);
     dispatch(refuser_un_article_postuler_par_deposant(article._id)).then(actions => {
       console.log(actions.payload);
       
@@ -206,7 +206,7 @@ console.log(article);
                             </span>
                             <span className="text-xs font-weight-bold">
                               <a className="avatar avatar-xs rounded-circle me-3" type="button" onClick={() => {
-                                afficher(article)
+   
                                 refuser(article)
 
                               }}>

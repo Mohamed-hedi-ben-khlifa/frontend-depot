@@ -12,7 +12,7 @@ export default function Ajouter_deposant() {
         nom: "",
         prenom: "",
         email: "",
-        pasword: "",
+        pasword: "depot2022",
         telephone: "",
         adress: "",
         cin: "",

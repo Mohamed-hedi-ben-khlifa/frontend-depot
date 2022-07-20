@@ -50,6 +50,8 @@ export default function Articles() {
 
   useEffect(() => { dispatch(liste_des_articles()).then(action => setArticles(action.payload.article)) },[,dispatch])
 
+  useEffect(() => { dispatch(liste_des_articles()).then(action => console.log(action.payload.article)) },[,dispatch])
+
   useEffect(() => {
     socket.on("mettre_a_jour_liste_des_articles", () => {
       dispatch(liste_des_articles()).then(action => setArticles(action.payload.article))
@@ -342,7 +344,7 @@ export default function Articles() {
                       <a data-bs-toggle="modal"  data-bs-target="#tirer" type="button" onClick={() => modal(article)} >
                         {article.status_reversement === "Retour" ? <span className="text-dark ">Retour</span> : <span></span>}
                         {article.status_reversement === "Oui" ? <span className="text-success ">{article.status_vendu}</span> : <span></span>}
-                        {article.status_reversement === null ? <span className="text-primary ">Non</span> : <span></span>}
+                        {article.status_reversement === "non" ? <span className="text-primary ">Non</span> : <span></span>}
                       </a>
                     </td>
                     <td className="align-middle text-center text-dark text-sm  font-weight-bold">
