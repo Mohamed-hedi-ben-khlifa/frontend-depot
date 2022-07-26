@@ -8,6 +8,7 @@ const Connexion = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch()
     const [valid, setvalid] = useState(true)
+    const [message, setMessage] = useState()
     const [user, setUser] = useState({
         email: "",
         pasword: "",
@@ -25,8 +26,14 @@ const Connexion = () => {
     const connexion = () => {
 
         dispatch(auth(user)).then(action => {
-            localStorage.setItem("token", action.payload.token)
-            window.location.reload()
+            if (action.payload.success) {
+                localStorage.setItem("token", action.payload.token)
+                window.location.reload()
+            }else{
+                setvalid(false)
+                setMessage(action.payload.message)
+
+            }
         })
     }
 
@@ -62,7 +69,7 @@ const Connexion = () => {
                                                 <label className="form-label">Password</label>
                                                 <input type="password" className="form-control" name="pasword" value={user.pasword} onChange={handleChange} />
                                             </div>
-                                            {!valid ? <p className='text-primary text_start'> Adresse email ou mot de passe inncorrect !! </p> : <p></p>}
+                                            {!valid ? <p className='text-primary text_start text-xs'> {message} </p> : <p></p>}
                                             <div className=" text-md-right text-dark">
                                                 <a href="#">Mot de passe oublié</a>
                                             </div>

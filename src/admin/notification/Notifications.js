@@ -11,6 +11,7 @@ export default function Notifications() {
 
     const [notifications, setNotifications] = useState([])
     const [deposant, setDeposant] = useState()
+
     const [article, setArticle] = useState({
         _id: "article_id",
         description: null,
@@ -67,6 +68,7 @@ export default function Notifications() {
     const vu = (notification) => {
 
         socket.emit("deposant_postule_un_article")
+
         dispatch(vuNotifications(notification._id))
 
         dispatch(getNotifications()).then(action => { setNotifications(action.payload.notification) })
@@ -265,11 +267,11 @@ export default function Notifications() {
                                             </div>
                                         </div>
                                         <div  >
-                                            <Barcode value={article?._id} width={1.5} displayValue={false} height={60} marginTop={30} background={'none'} />
+                                        <Barcode  value={article?._id} width={1.5} displayValue={false} height={60} marginTop={30} background={'none'} />
                                         </div>
                                         {
                                             article.user_id !== null ?
-                                                <div className="" style={{ width: '100%', fontSize: '1.2rem', fontWeight: '500', color: '#20247b' }} aria-bs-label="Close" data-bs-dismiss="modal">
+                                                <div className="" style={{ width: '100%', fontSize: '1.2rem', fontWeight: '500', color: '#20247b' }} aria-label="Close" data-bs-dismiss="modal">
                                                     <Link to={`/deposant/profile/${deposant?._id}`}>
                                                         <span>
                                                             Déposant :

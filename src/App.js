@@ -62,7 +62,7 @@ function App() {
 
 
   useEffect(() => {
-    if (token?.length > 0) 
+    if (token !== null )
       dispatch(rechercher_user_par_token()).then(action => {
         setUser(action.payload.user)
       })
@@ -77,12 +77,6 @@ function App() {
 
     
   }, [user,token,dispatch])
-
-
-  useEffect(() => {
-    socket.emit("newUser", user)
-  })
-
 
 
   return (

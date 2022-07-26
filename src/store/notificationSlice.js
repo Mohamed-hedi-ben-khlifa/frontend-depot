@@ -112,7 +112,7 @@ const notificationSlice = createSlice({
             if(action.payload.success){
                 state.notifications.push(action.payload.notification)
             }
-            console.log(action.payload)
+
         },
 
         [deleteNotifications.fulfilled]: (state,action) =>{
@@ -121,9 +121,7 @@ const notificationSlice = createSlice({
 
         [vuNotifications.fulfilled]: (state,action) =>{
 
-            state.notifications=state.notifications.filter((el) =>  el._id !== action.payload)
-            console.log(action.payload)
-      
+            state.notifications=state.notifications.filter((el) =>  el._id !== action.payload)    
    
         },
 

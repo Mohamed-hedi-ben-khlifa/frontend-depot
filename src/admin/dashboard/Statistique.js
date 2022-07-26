@@ -33,6 +33,7 @@ export default function Statistique() {
             dispatch(liste_des_articles_vendu_par_jours(date)).then(action => {
                 const r = action.payload.article?.map(article => article.prix_vente_ttc).reduce((prev, curr) => prev + curr, 0)
                 setRevenu(revenu => [r, ...revenu])
+               
             })
         }
     }, [])
@@ -45,7 +46,7 @@ export default function Statistique() {
             dispatch(liste_des_articles_vendu_par_mois(x)).then(action => {
                 const r = action.payload.article?.map(article => article.prix_vente_ttc).reduce((prev, curr) => prev + curr, 0)
                 setRevenu_par_mois(revenu_par_mois => [r, ...revenu_par_mois])
-                console.log(x);
+                
             })
         }
     }, [])

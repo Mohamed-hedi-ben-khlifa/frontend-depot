@@ -15,7 +15,7 @@ export const Private_Routes_Admin = (props) => {
 
   useEffect(() => {
     dispatch(information()).then((action) => {
-      console.log(action);
+
       if (!action.payload.boutique[0]) {
         const boutique = {
           email: "Dépot@mail.com",
