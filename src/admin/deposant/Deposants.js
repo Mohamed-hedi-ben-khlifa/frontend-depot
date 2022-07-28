@@ -142,7 +142,7 @@ export default function Deposants() {
                         <span className="text-xm text-dark  font-weight-bold"> {deposant.codepostal ? deposant.codepostal : "****"}  </span>
                       </td>
                       <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
-                        <span className="text-sm font-weight-bold"> {formatDate(deposant.dateN)} </span>
+                        <span className="text-sm font-weight-bold"> { deposant.dateN?formatDate(deposant.dateN): "--/--/----"} </span>
                       </td>
                       <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                         <span className="text-xs font-weight-bold">

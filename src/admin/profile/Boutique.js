@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { information, modifier_boutique, modifier_nom_boutique, modifier_pofit_des_articles_deposant, upload_logo_boutique } from '../../store/boutiqueSlice'
@@ -18,7 +17,6 @@ export default function Boutique() {
         telephone: null,
         adress: null,
         logo: null,
-        _id: "6295faa203fd2dc800c3d945"
     })
 
     useEffect(() => {
@@ -84,7 +82,7 @@ export default function Boutique() {
                         <div className="card ">
                             <div className="about-avatar text-center " style={{ padding: '3%' }} >
                                 <a type="button" data-bs-toggle="modal" data-bs-target="#logo" >
-                                    <img className="img-center" src={boutique?.logo ? boutique?.logo: '../../../assets/img/logo-ct-dark.png' } style={{ width: '90px', height: '90px' }} />
+                                    <img className="img-center" src={boutique?.logo ?process.env.REACT_APP_BASE_URL+"/"+ boutique?.logo: '../../../assets/img/logo-ct-dark.png' } style={{ width: '90px', height: '90px' }} />
                                     <h5 className="text-secondary  text-center mt-1 ">Logo de Boutique</h5>
                                 </a>
                             </div>

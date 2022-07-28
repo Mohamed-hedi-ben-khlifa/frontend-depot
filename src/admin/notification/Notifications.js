@@ -11,7 +11,6 @@ export default function Notifications() {
 
     const [notifications, setNotifications] = useState([])
     const [deposant, setDeposant] = useState()
-
     const [article, setArticle] = useState({
         _id: "article_id",
         description: null,
@@ -225,7 +224,7 @@ export default function Notifications() {
                                         <div className="about-text go-to">
                                             <div className="row">
                                                 <div className="col-9">
-                                                    {article?.lib !== null ? <h3 className="dark-color text-start " style={{ marginTop: '6%' }}>{article?.lib} </h3>
+                                                    {article?.lib !== "" ? <h3 className="dark-color text-start " style={{ marginTop: '6%' }}>{article?.lib} </h3>
                                                         : <h3 className="dark-color text-start " style={{ marginTop: '6%' }}>article</h3>}
                                                 </div>
                                             </div>

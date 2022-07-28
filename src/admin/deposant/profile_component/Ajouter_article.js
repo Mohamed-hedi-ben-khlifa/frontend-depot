@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ajouter_article, liste_des_article_de_deposant, supprimer_article } from '../../../store/articleSlice'
 import { ajouter_reçu } from '../../../store/reçuSlice'
@@ -15,16 +15,15 @@ export default function Ajouter_article(props) {
     const [articles, setArticles] = useState([])
     const [article, setArticle] = useState({
         user_id: props.id,
-        description: null,
-        lib: null,
+        lib: "",
         etat: "Neuf",
-        prix_vente_ttc: null,
-        prix_achat: null,
-        montant_reverser: null,
-        date_vente: null,
-        date_reversement: null,
-        date_depot: new Date(d.getFullYear(), d.getMonth(), d.getDay()),
-        status_reversement: null,
+        prix_vente_ttc: "",
+        prix_achat: "",
+        montant_reverser: "",
+        date_vente: "",
+        date_reversement: "",
+        date_depot: new Date(Date.now()),
+        status_reversement: "Non",
         status_acceptation: "Deposer",
         status_vendu: "Non",
         image: []
@@ -35,7 +34,7 @@ export default function Ajouter_article(props) {
             ...prevState,
             montant_reverser: article.prix_vente_ttc - ((article.prix_vente_ttc * boutique?.taux) / 100)
         }));
-    }, [dispatch, article.prix_vente_ttc,boutique.taux])
+    }, [dispatch, article.prix_vente_ttc, boutique.taux])
 
 
     const handleChange = e => {
@@ -61,6 +60,10 @@ export default function Ajouter_article(props) {
 
     async function ajouter() {
 
+        setArticle(prevState => ({
+            ...prevState,
+            montant_reverser: article.prix_vente_ttc - ((article.prix_vente_ttc * boutique?.taux) / 100)
+        }));
         dispatch(ajouter_article(article)).then((action) => {
             const art = action.payload.article
             setArticles(articles => [...articles, art])
@@ -76,7 +79,7 @@ export default function Ajouter_article(props) {
 
     async function save() {
         var s = 0
-         articles === [] ? s = articles[0].montant_reverser : s = 0 
+        articles === [] ? s = articles[0].montant_reverser : s = 0
         articles.map?.(article => { s = s + article.prix_vente_ttc })
         setTotal(s)
 
@@ -87,7 +90,7 @@ export default function Ajouter_article(props) {
             nombre_articles: articles.length,
             total: s,
             total_a_verser: (total - ((total * boutique?.taux) / 100)),
-            date_reçu: new Date(d.getFullYear(), d.getMonth(), d.getDay())
+            date_reçu: new Date(Date.now())
         }
 
         dispatch(liste_des_article_de_deposant(props.id)).then((action) => props.setArticles(action.payload.article))
@@ -130,59 +133,59 @@ export default function Ajouter_article(props) {
         <div>
             <div className="container-fluid ">
                 <div className="card  text-start">
-                        <div className="card-header pb-0">
-                            <div className="row  mb-4">
-                                <div className="col-lg-11 col-7">
-                                    <h4>Nouveau article</h4>
-                                </div>
+                    <div className="card-header pb-0">
+                        <div className="row  mb-4">
+                            <div className="col-lg-11 col-7">
+                                <h4>Nouveau article</h4>
                             </div>
                         </div>
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-1" />
-                                <div className="col-md-3">
-                                    <div className="input-group input-group-static mb-4">
-                                        <h6 style={{ marginBottom: '-3%' }}>libelle</h6>
-                                        <input id="lib" className="form-control" placeholder="EX: pontalon, chemise, basquette" onKeyDown={handleChange} onChange={handleChange} value={article.lib} name="lib" />
-                                    </div>
-                                </div>
-                                <div className="col-md-3 ps-2">
-                                    <div className="input-group input-group-static mb-4">
-                                        <h6 style={{ marginBottom: '-3%' }}>Etat </h6>
-                                        <select className="form-control" placeholder="Neuf, Bon etat, Passablbe" name="etat" onKeyDown={handleChange} onChange={handleChange} value={article.etat}>
-                                            <option value="" disabled>Neuf, Bon etat, Passablbe</option>
-                                            <option value="Neuf">Neuf</option>
-                                            <option value="Bon etat">Bon etat</option>
-                                            <option value="Passable">Passable</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="input-group input-group-static mb-4">
-                                        <h6 style={{ marginBottom: '-3%' }}>Prix de vente </h6>
-                                        <input className="form-control" placeholder="$ 23,000" name="prix_vente_ttc" onKeyDown={handleChange} onChange={handleChange} value={article.prix_vente_ttc} type="number" />
-                                    </div>
-                                </div>
-                                <div className="col-1" >
-                                    <a type="button" onClick={() => ajouter()} >
-                                        <img src="../../assets/img/plus.png" alt="team5" style={{ width: '40%', marginTop: '14%' }} />
-                                    </a>
+                    </div>
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-1" />
+                            <div className="col-md-3">
+                                <div className="input-group input-group-static mb-4">
+                                    <h6 style={{ marginBottom: '-3%' }}>libelle</h6>
+                                    <input id="lib" className="form-control" placeholder="EX: pontalon, chemise, basquette" onKeyDown={handleChange} onChange={handleChange} value={article.lib} name="lib" />
                                 </div>
                             </div>
-                            <div className="row  m-4">
-                                <div className="col-lg-8"> </div>
-                                <div className="col-2 ml-4" style={{ marginLeft: '5%' }}>
-                                    <button className="btn bg-gradient-dark btn-icon col-10 m-2 mt-0 " type="button" onClick={() => save()}>
-                                        <div className="d-flex align-items-center" style={{ marginLeft: '30%' }}  >
-                                            Terminer
-                                            <span className="material-icons">
-                                                done
-                                            </span>
-                                        </div>
-                                    </button>
+                            <div className="col-md-3 ps-2">
+                                <div className="input-group input-group-static mb-4">
+                                    <h6 style={{ marginBottom: '-3%' }}>Etat </h6>
+                                    <select className="form-control" placeholder="Neuf, Bon etat, Passablbe" name="etat" onKeyDown={handleChange} onChange={handleChange} value={article.etat}>
+                                        <option value="" disabled>Neuf, Bon etat, Passablbe</option>
+                                        <option value="Neuf">Neuf</option>
+                                        <option value="Bon etat">Bon etat</option>
+                                        <option value="Passable">Passable</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="input-group input-group-static mb-4">
+                                    <h6 style={{ marginBottom: '-3%' }}>Prix de vente </h6>
+                                    <input className="form-control" placeholder="$ 23,000" name="prix_vente_ttc" onKeyDown={handleChange} onChange={handleChange} value={article.prix_vente_ttc} type="number" />
+                                </div>
+                            </div>
+                            <div className="col-1" >
+                                <a type="button" onClick={() => ajouter()} >
+                                    <img src="../../assets/img/plus.png" alt="team5" style={{ width: '40%', marginTop: '14%' }} />
+                                </a>
                             </div>
                         </div>
+                        <div className="row  m-4">
+                            <div className="col-lg-8"> </div>
+                            <div className="col-2 ml-4" style={{ marginLeft: '5%' }}>
+                                <button className="btn bg-gradient-dark btn-icon col-10 m-2 mt-0 " type="button" onClick={() => save()}>
+                                    <div className="d-flex align-items-center" style={{ marginLeft: '30%' }}  >
+                                        Terminer
+                                        <span className="material-icons">
+                                            done
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div className="table" style={{ marginLeft: '20%', width: '60%' }}>
                         <table className="table align-items-end " >
                             <tbody>
@@ -193,7 +196,7 @@ export default function Ajouter_article(props) {
                                         </td>
                                         <td className="text-sm font-weight-bold " style={{ width: '10%' }}>
 
-                                            {article.lib ? article.lib : "article"}
+                                            {article.lib !=="" ? article.lib : "article"}
                                         </td>
                                         <td className="text-sm text-dark font-weight-bold" style={{ width: '5%' }}>
                                             {article.etat ? article.etat : "-------"}
@@ -205,10 +208,10 @@ export default function Ajouter_article(props) {
                                             {formatDate(article.date_depot)}
                                         </td>
                                         <td className="text-xm font-weight-bold" style={{ width: '10%' }}>
-                                            $ {(article.prix_vente_ttc)?.toFixed(3)}
+                                            $ { article.prix_vente_ttc?(article.prix_vente_ttc)?.toFixed(3) :"0.000"}
                                         </td>
                                         <td className="text-xm font-weight-bold" style={{ width: '10%' }}>
-                                            $ {(article.montant_reverser)?.toFixed(3)}
+                                            $ {article.montant_reverser?(article.montant_reverser)?.toFixed(3):"0.000"}
                                         </td>
                                         <td className="text-xs font-weight-bold" style={{ width: '5%' }}>
                                             <a className="avatar avatar-xs rounded-circle me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid" onClick={() => retirer(article._id)}>
@@ -261,7 +264,7 @@ export default function Ajouter_article(props) {
                                                 {article.lib !== "" ? <span className="text-sm font-weight-bold"  >{article.lib}</span> : <span>Article  </span>}
                                             </td>
                                             <td className="align-middle text-center text-sm" style={{ border: '0 px solid' }}>
-                                                <span className="text-xm  text-dark font-weight-bold">$ {(article.montant_reverser)?.toFixed(3)} </span>
+                                                <span className="text-xm  text-dark font-weight-bold">$ {article.montant_reverser?(article.montant_reverser)?.toFixed(3) :"0.000"} </span>
                                             </td>
                                         </tr>
                                     )}

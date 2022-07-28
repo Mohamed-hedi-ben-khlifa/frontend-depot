@@ -18,10 +18,9 @@ export default function Information(props) {
     
     dispatch(upload_image_deposant(params)).then((action) => {
       socket.emit("mettre_a_jour_photo_de_profile")
-      console.log(action)
       props.setDeposant(prevState => ({
         ...prevState,
-        image: process.env.REACT_APP_BASE_URL+"/"+ action.payload.file.filename
+        image:  action.payload.file.filename
       }))
     })
   }

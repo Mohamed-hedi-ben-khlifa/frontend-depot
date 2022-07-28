@@ -16,7 +16,6 @@ export default function Caisse() {
     const [total, setTotal] = useState(0)
     const [articles, setArticles] = useState([])
     const enabled = articles.length > 0
-    const d = new Date()
     const dispatch = useDispatch()
 
 
@@ -80,7 +79,7 @@ export default function Caisse() {
             nombre_articles: articles.length,
             articles: articles,
             status: "Caisse",
-            date_reçu: new Date(d.getFullYear(), d.getMonth(), d.getUTCDate())
+            date_reçu: new Date(Date.now()),
         }
 
         dispatch(ajouter_reçu(reçu))
@@ -142,7 +141,7 @@ export default function Caisse() {
                                         </div>
                                         <div className="col-1">
                                             <div>
-                                                <img src={boutique?.logo ? boutique?.logo: '../../../assets/img/logo-ct-dark.png' } className="navbar-brand-img h-100 mt-4 " alt="main_logo" style={{ width: '90%', height: '90%' }} />
+                                                <img src={boutique?.logo ?process.env.REACT_APP_BASE_URL+"/"+ boutique?.logo: '../../../assets/img/logo-ct-dark.png' } className="navbar-brand-img h-100 mt-4 " alt="main_logo" style={{ width: '90%', height: '90%' }} />
                                             </div>
                                         </div>
                                         <div className="col-3" />

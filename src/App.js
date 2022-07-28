@@ -70,10 +70,10 @@ function App() {
 
   useEffect(() => {
 
-        if (user?.role === "Gérant"  && token?.length > 0) {navigate('/gerant/caisse')}
-        if (user?.role === "Vendeur" && token?.length > 0) { navigate('/vendeur/caisse')}
-        if (user?.role === "admin" && token?.length > 0) { navigate('/caisse')}
-        if (!user || !token) { navigate('/connexion')}
+        if (user?.role === "Gérant"  && token !== null) {navigate('/gerant/caisse')}
+        if (user?.role === "Vendeur" && token!== null) { navigate('/vendeur/caisse')}
+        if (user?.role === "admin" && token !== null ) { navigate('/caisse')}
+        if (!user || token === null) { navigate('/connexion')}
 
     
   }, [user,token,dispatch])

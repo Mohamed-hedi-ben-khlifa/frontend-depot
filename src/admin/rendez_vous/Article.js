@@ -8,17 +8,17 @@ export default function Article(props) {
     const dispatch = useDispatch()
     const [article, setArticle] = useState({
         date_depot: "",
-        date_reversement: null,
-        date_vendu: null,
+        date_reversement: "",
+        date_vendu: "",
         description: "",
         etat: "",
         image: "",
         lib: "",
-        montant_reverser: null,
-        prix_vente_ttc: null,
-        ref: null,
+        montant_reverser: "",
+        prix_vente_ttc: "",
+        ref: "",
         status_acceptation: "",
-        status_reversement: null,
+        status_reversement: "",
         status_vendu: "",
         user_id: ""
     })

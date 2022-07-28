@@ -12,7 +12,7 @@ export default function Liste_des_article_non_verser(props) {
     const dispatch = useDispatch()
     const socket = useContext(SocketContext);
 
-    const d = new Date()
+
 
     const afficher = () => { if (etat === 0) { setEtat(1) } else { setEtat(0) } }
 
@@ -32,7 +32,7 @@ export default function Liste_des_article_non_verser(props) {
             nombre_articles: props.article_non_verser.length,
             total: t,
             total_a_verser: t - ((t * boutique?.taux) / 100),
-            date_reçu: new Date(d.getFullYear(), d.getMonth(), d.getDay())
+            date_reçu: new Date(Date.now())
            
         }
 
@@ -113,10 +113,10 @@ export default function Liste_des_article_non_verser(props) {
                                                     <span className="text-xm text-primary font-weight-bold"> {article.ref}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
-                                                    {article.lib !== null ? <span className="text-sm   font-weight-bold">{article.lib}</span> : <span className="text-sm  font-weight-bold">Article  </span>}
+                                                    {article.lib !== "" ? <span className="text-sm   font-weight-bold">{article.lib}</span> : <span className="text-sm  font-weight-bold">Article  </span>}
                                                 </td>
                                                 <td className="align-middle text-center text-sm">
-                                                    <span className="text-xm  text-dark font-weight-bold">$ {(article.prix_vente_ttc)?.toFixed(3)}</span>
+                                                    <span className="text-xm  text-dark font-weight-bold">$ { article.prix_vente_ttc? (article.prix_vente_ttc)?.toFixed(3) : "0.000"}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                                                     <span className="text-xs font-weight-bold">{formatDate(article.date_depot)} </span>

@@ -2,13 +2,12 @@ import { ajouter_article, supprimer_article } from '../../store/articleSlice'
 import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import Barcode from 'react-barcode';
-import axios from 'axios'
+import { Link } from 'react-router-dom';
+
 
 export default function Ajouter_article() {
 
     const dispatch = useDispatch()
-    const d = new Date()
-    const [images, setImages] = useState([])
     const [articles, setArticles] = useState([])
     const [article, setArticle] = useState({
         user_id: null,
@@ -20,7 +19,7 @@ export default function Ajouter_article() {
         montant_reverser: null,
         date_vente: null,
         date_reversement: null,
-        date_depot: new Date(d.getFullYear(), d.getMonth(), d.getUTCDate()),
+        date_depot: new Date(Date.now()),
         status_reversement: null,
         status_acceptation: "boutique",
         status_vendu: null,
@@ -130,14 +129,14 @@ export default function Ajouter_article() {
                             <div className="row  m-4">
                                 <div className="col-lg-8"> </div>
                                 <div className="col-2 ml-4" style={{ marginLeft: '5%' }}>
-                                    <button className="btn bg-gradient-dark btn-icon col-12 m-2 mt-0 " type="button" onClick={() => save()}>
-                                        <div className="d-flex align-items-center" style={{ marginLeft: '30%' }}  >
+                                    <Link to="/article/list" className="btn bg-gradient-dark btn-icon col-12 m-2 mt-0 " type="button" onClick={() => save()}>
+                                        <div   className="d-flex align-items-center" style={{ marginLeft: '30%' }}  >
                                             Terminer
                                             <span className="material-icons">
                                                 done
                                             </span>
                                         </div>
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -163,13 +162,13 @@ export default function Ajouter_article() {
                                             {formatDate(article.date_depot)}
                                         </td>
                                         <td className="text-xm font-weight-bold" style={{ width: '10%' }}>
-                                            $ {(article.prix_achat)?.toFixed(3)}
+                                            $ {article.prix_achat?(article.prix_achat)?.toFixed(3):"0.000"}
                                         </td>
                                         <td className="text-xm font-weight-bold" style={{ width: '10%' }}>
-                                            $ {(article.prix_vente_ttc)?.toFixed(3)}
+                                            $ {article.prix_vente_ttc?(article.prix_vente_ttc)?.toFixed(3):"0.000"}
                                         </td>
                                         <td className="text-xs font-weight-bold" style={{ width: '5%' }}>
-                                            <a className="avatar avatar-xs rounded-circle me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid" onClick={() => retirer(article._id)}>
+                                            <a   className="avatar avatar-xs rounded-circle me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid" onClick={() => retirer(article._id)}>
                                                 <img src="../../assets/img/refuser.jpg" alt="team5" />
                                             </a>
                                         </td>

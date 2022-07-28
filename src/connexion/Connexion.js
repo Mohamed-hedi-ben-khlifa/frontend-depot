@@ -27,8 +27,11 @@ const Connexion = () => {
 
         dispatch(auth(user)).then(action => {
             if (action.payload.success) {
+                console.log(action)
                 localStorage.setItem("token", action.payload.token)
-                window.location.reload()
+                const myTimeout = setTimeout(window.location.reload(), 2000);
+                
+                
             }else{
                 setvalid(false)
                 setMessage(action.payload.message)

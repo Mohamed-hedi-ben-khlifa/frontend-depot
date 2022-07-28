@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { liste_des_reçus_deposer, rechercher_recu_deposer_par_reference} from '../../store/reçuSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { liste_des_reçus_deposer, rechercher_recu_deposer_par_reference } from '../../store/reçuSlice'
 
 
 export default function Liste_des_reçus_deposer() {
@@ -10,12 +10,13 @@ export default function Liste_des_reçus_deposer() {
     const dispatch = useDispatch()
     const [reçus, setReçus] = useState([])
     const [reçu, setReçu] = useState([])
-    const [message,setMessage]=useState()
+    const [message, setMessage] = useState()
+    const { boutique } = useSelector((state) => state.boutique)
 
     useEffect(() => {
 
-            dispatch(liste_des_reçus_deposer()).then((action) => { setReçus(action.payload.reçu) })
-      
+        dispatch(liste_des_reçus_deposer()).then((action) => { setReçus(action.payload.reçu) })
+
     }, [])
 
 
@@ -72,42 +73,41 @@ export default function Liste_des_reçus_deposer() {
         return [h, m, s].join(':');
     }
 
-const modal = (reçu)=>{
-   setReçu(reçu);
-   console.log(reçu);
-}
-
-
-const handleChange = e => {
-
-    if(e.code === "Enter"  ){onKeyDown(e)};
-}
-
-const onKeyDown =async (e) => {
-
-    function myGreeting() {
-      setMessage("")
+    const modal = (reçu) => {
+        setReçu(reçu);
     }
-    console.log(e.target.value);
-    if(e.target.value === ""){
-        dispatch(liste_des_reçus_deposer()).then(async(action) => {setReçus(action.payload.reçu)})
-      }else{
-        dispatch(rechercher_recu_deposer_par_reference(e.target.value)).then(async(action) => { 
-            if(action.payload.reçu.length > 0){
-              setReçus(action.payload.reçu)
-              setMessage("")
-              
-            }
-            else{
-              dispatch(liste_des_reçus_deposer()).then(async(action) => {setReçus(action.payload.reçu)})
-              setTimeout(setMessage("Reçu n'est pas trouver !"), 1000)
-              setTimeout(myGreeting, 5000);
-           
-            }
-          })
-      }
 
-  }
+
+    const handleChange = e => {
+
+        if (e.code === "Enter") { onKeyDown(e) };
+    }
+
+    const onKeyDown = async (e) => {
+
+        function myGreeting() {
+            setMessage("")
+        }
+        console.log(e.target.value);
+        if (e.target.value === "") {
+            dispatch(liste_des_reçus_deposer()).then(async (action) => { setReçus(action.payload.reçu) })
+        } else {
+            dispatch(rechercher_recu_deposer_par_reference(e.target.value)).then(async (action) => {
+                if (action.payload.reçu.length > 0) {
+                    setReçus(action.payload.reçu)
+                    setMessage("")
+
+                }
+                else {
+                    dispatch(liste_des_reçus_deposer()).then(async (action) => { setReçus(action.payload.reçu) })
+                    setTimeout(setMessage("Reçu n'est pas trouver !"), 1000)
+                    setTimeout(myGreeting, 5000);
+
+                }
+            })
+        }
+
+    }
 
     return (
         <div>
@@ -135,118 +135,120 @@ const onKeyDown =async (e) => {
 
                         </div>
                     </a>
+                </div>
+
+                <div className="card mt-4">
+                    <div className="card-body">
+
+
+
+
                     </div>
-              
-                        <div className="card mt-4">
-                            <div className="card-body">
 
 
+                    <div className="table" style={{ marginLeft: '10%', width: '80%' }}>
 
 
-                            </div>
+                        <table className="table align-items-end " >
+                            <thead>
+                                <tr>
+                                    <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" width="10%" >Réference</th>
+                                    <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date dépot</th>
+                                    <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Heure ddepot</th>
+                                    <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Total Prix</th>
 
+                                    <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"  >Nbr D'article</th>
 
-                            <div className="table" style={{ marginLeft: '10%', width: '80%' }}>
+                                    <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Montant à versé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reçus?.map((reçu, index) =>
 
+                                    <tr key={index} >
+                                        <td className="text-sm text-primary text-center font-weight-bold" >
+                                            <a data-bs-toggle="modal" data-bs-target="#recu" type="button" onClick={() => modal(reçu)}>
 
-                                <table className="table align-items-end " >
-                                    <thead>
-                                        <tr>
-                                            <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" width="10%" >Réference</th>
-                                            <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date dépot</th>
-                                            <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Heure ddepot</th>
-                                            <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Total Prix</th>
+                                                {reçu.ref}
+                                            </a>
+                                        </td>
 
-                                            <th className=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"  >Nbr D'article</th>
-
-                                            <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Montant à versé</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {reçus?.map((reçu, index) =>
-
-                                            <tr key={index} >
-                                                    <td className="text-sm text-primary text-center font-weight-bold" >
-                                                    <a data-bs-toggle="modal" data-bs-target="#recu" type="button" onClick={()=>modal(reçu)}>
-
-                                                        {reçu.ref}
-                                                        </a>
-                                                    </td>
-                                                
-                                                {
-                                                    reçu.date_reçu !== null ?
-                                                        <td className="text-sm text-dark text-center font-weight-bold" >
-                                                            {formatDate(reçu.date_reçu)}
-                                                        </td> :
-                                                        <td className="text-sm text-dark text-center font-weight-bold" >
-                                                            --/--/----
-                                                        </td>
-                                                }
-                                                {
-                                                    reçu.date_reçu !== null ?
-                                                        <td className="text-sm text-dark text-center font-weight-bold" >
-                                                            {formatTime(reçu.date_reçu)}
-                                                        </td> :
-                                                        <td className="text-sm text-dark text-center font-weight-bold" >
-                                                            --:--
-                                                        </td>
-                                                }
-
-                                                <td className="text-sm text-primary text-center font-weight-bold" >
-                                                    $ {(reçu.total).toFixed(3)}
+                                        {
+                                            reçu.date_reçu !== null ?
+                                                <td className="text-sm text-dark text-center font-weight-bold" >
+                                                    {formatDate(reçu.date_reçu)}
+                                                </td> :
+                                                <td className="text-sm text-dark text-center font-weight-bold" >
+                                                    --/--/----
                                                 </td>
-                                                <td className="text-xm text-center font-weight-bold" >
-                                                    {reçu.nombre_articles}
+                                        }
+                                        {
+                                            reçu.date_reçu !== null ?
+                                                <td className="text-sm text-dark text-center font-weight-bold" >
+                                                    {formatTime(reçu.date_reçu)}
+                                                </td> :
+                                                <td className="text-sm text-dark text-center font-weight-bold" >
+                                                    --:--
                                                 </td>
+                                        }
 
-                                                <td className="text-xm text-dark text-center font-weight-bold" >
-                                                    $  {(reçu.total_a_verser ).toFixed(3)}
-                                                </td>
+                                        <td className="text-sm text-primary text-center font-weight-bold" >
+                                            $ {(reçu.total).toFixed(3)}
+                                        </td>
+                                        <td className="text-xm text-center font-weight-bold" >
+                                            {reçu.nombre_articles}
+                                        </td>
 
-
-                                            </tr>
-
-
-
-
-
-
-
+                                        <td className="text-xm text-dark text-center font-weight-bold" >
+                                            $  {(reçu.total_a_verser).toFixed(3)}
+                                        </td>
 
 
-                                        )}
-                                    </tbody>
-                                </table>
+                                    </tr>
 
-                            </div>
-                        </div>
-                      
-               
+
+
+
+
+
+
+
+
+                                )}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
             </div>
 
             <div className="modal fade" id="recu" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content text-center  ">
-                        <h4 className="text-center mt-4" style={{ fontWeight: '700' }}>Dépôt Shop  </h4>
+                        <h4 className="text-center mt-4" style={{ fontWeight: '700' }}>{boutique.nom} </h4>
 
-                        <p style={{ marginTop: '2%' }}>Email: STE.Mohamed_benkhlifa@gmail.com</p>
-                        <p style={{ marginTop: '-4%' }}>Adress: Rue cheneb,7090 sousse</p>
-                        <p style={{ marginTop: '-4%' }}>Tél: +216 25300 612</p>
+                        <p style={{ marginTop: '2%' }}>Email: {boutique.email}</p>
+                        <p style={{ marginTop: '-4%' }}>Adress: {boutique.adress}</p>
+                        <p style={{ marginTop: '-4%' }}>Tél: +216 {boutique.telephone}</p>
 
                         <img className="w-40  " src="../../assets/img/Barcode-PNG-Image.png" alt="ladydady" loading="lazy" style={{ marginLeft: '31%' }} />
-                        <p className=" text-dark">Sahloul le 21/02/2022</p>
+                        <p className=" text-dark">Sahloul le {formatDate(new Date())}</p>
+
+
 
 
 
                         <div className="row w-100 " style={{ marginLeft: '5%' }}>
-                        <div className="col-9">
+                            <div className="col-9">
                                 <span><h6 className="text-start " style={{ fontWeight: '700' }}> Deposant :</h6></span>
-                                <span><p style={{ marginTop: '-9.5%', marginLeft: '6%' }}>{reçu.user ?reçu.user.nom + reçu.user.prenom  : ""  }</p></span>
+                                <span><p style={{ marginTop: '-9.5%', marginLeft: '6%' }}>{reçu.user ? reçu.user.nom + reçu.user.prenom : ""}</p></span>
                             </div>
 
                             <div className="col-3">
                                 <span><h6 className="text-start " style={{ fontWeight: '700', marginLeft: '-30%' }}>Réf: </h6></span>
-                                <span><p style={{ marginTop: '-33%', marginLeft: '-36%' }}>{reçu.user ?reçu.user.ref  : ""  }</p></span>
+                                <span><p style={{ marginTop: '-33%', marginLeft: '-36%' }}>{reçu.user ? reçu.user.ref : ""}</p></span>
                             </div>
 
                         </div>

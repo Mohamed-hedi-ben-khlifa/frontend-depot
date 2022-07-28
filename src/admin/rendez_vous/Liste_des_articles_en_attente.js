@@ -326,7 +326,7 @@ console.log(article._id);
                     <div  >
                       <Barcode value={article?._id} width={1.5} displayValue={false} height={60} marginTop={10} background={'none'} />
                     </div>
-                    <div className="" style={{ width: '100%', fontSize: '1.2rem', fontWeight: '500', color: '#20247b' }} aria-bs-label="Close" data-bs-dismiss="modal">
+                    <div className="" style={{ width: '100%', fontSize: '1.2rem', fontWeight: '500', color: '#20247b' }} aria-label="Close" data-bs-dismiss="modal">
                       <Link to={`/deposant/profile/${deposant?._id}`}>
                         <span>
                           Déposant :
@@ -356,7 +356,7 @@ console.log(article._id);
                     <input type="datetime-local" className="form-control" onChange={handeleDate} />
                   </div>
                 </div>
-                <button type="button" className="btn bg-gradient-dark btn-icon col-11 m-3 mt-0 mb-4 mt-4 " onClick={() => rendez_vous()} data-bs-dismiss="modal" aria-bs-label="Close">sauvegarder</button>
+                <button type="button" className="btn bg-gradient-dark btn-icon col-11 m-3 mt-0 mb-4 mt-4 " onClick={() => rendez_vous()} data-bs-dismiss="modal" aria-label="Close">sauvegarder</button>
               </div>
             </div>
           </div>

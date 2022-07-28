@@ -239,7 +239,7 @@ export default function SideBar(props) {
                     <div className="sidenav-header">
                         <i className="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" />
                         <span className="navbar-brand m-0"  >
-                            <img src={boutique?.logo ? boutique?.logo: '../../../assets/img/logo-ct-dark.png' } className="navbar-brand-img h-100" alt="main_logo" style={{ marginTop: "-8%", marginRight: "6%" }} />
+                            <img src={boutique?.logo ?process.env.REACT_APP_BASE_URL+"/"+ boutique?.logo: '../../../assets/img/logo-ct-dark.png' } className="navbar-brand-img h-100" alt="main_logo" style={{ marginTop: "-8%", marginRight: "6%" }} />
                             <span className="ms-1 font-weight-bold " style={{ color: "#111", fontFamily: 'Indie Flower', fontweight: '700', fontSize: "200%" }}>{boutique?.nom} </span>
                         </span>
                     </div>

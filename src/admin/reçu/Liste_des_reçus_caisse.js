@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { liste_des_reçus_caisse, rechercher_recu_caisse_par_reference, rechercher_reçu_caisse_par_reference} from '../../store/reçuSlice'
 
 
@@ -11,6 +11,7 @@ export default function Liste_des_reçus_verser() {
     const [reçus, setReçus] = useState([])
     const [reçu, setReçu] = useState([])
     const [message,setMessage]=useState()
+    const { boutique } = useSelector((state) => state.boutique)
 
     useEffect(() => {
 
@@ -74,7 +75,6 @@ export default function Liste_des_reçus_verser() {
 
 const modal = (reçu)=>{
    setReçu(reçu);
-   console.log(reçu);
 }
 
 const handleChange = e => {
@@ -195,19 +195,9 @@ const onKeyDown =async (e) => {
                                                 </td>
                                                 <td className="text-xm text-center font-weight-bold" >
                                                     {reçu.nombre_articles}
-                                                </td>
-
-                                              
+                                                </td>  
 
                                             </tr>
-
-
-
-
-
-
-
-
 
                                         )}
                                     </tbody>
@@ -222,14 +212,14 @@ const onKeyDown =async (e) => {
             <div className="modal fade" id="recu" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content text-center  ">
-                        <h4 className="text-center mt-4" style={{ fontWeight: '700' }}>Dépôt Shop  </h4>
+                        <h4 className="text-center mt-4" style={{ fontWeight: '700' }}>{boutique.nom} </h4>
 
-                        <p style={{ marginTop: '2%' }}>Email: STE.Mohamed_benkhlifa@gmail.com</p>
-                        <p style={{ marginTop: '-4%' }}>Adress: Rue cheneb,7090 sousse</p>
-                        <p style={{ marginTop: '-4%' }}>Tél: +216 25300 612</p>
+                        <p style={{ marginTop: '2%' }}>Email: {boutique.email}</p>
+                        <p style={{ marginTop: '-4%' }}>Adress: {boutique.adress}</p>
+                        <p style={{ marginTop: '-4%' }}>Tél: +216 {boutique.telephone}</p>
 
                         <img className="w-40  " src="../../assets/img/Barcode-PNG-Image.png" alt="ladydady" loading="lazy" style={{ marginLeft: '31%' }} />
-                        <p className=" text-dark">Sahloul le 21/02/2022</p>
+                        <p className=" text-dark">Sahloul le {formatDate(new Date())}</p>
 
 
 

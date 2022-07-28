@@ -17,9 +17,9 @@ export default function Ajouter_deposant() {
         adress: "",
         cin: "",
         role: "deposant",
-        dateN: null,
+        dateN: undefined,
         codepostal: "",
-        dateCreation: new Date(d.getDay(), d.getMonth(), d.getFullYear()),
+        dateCreation: new Date(Date.now()),
         image: ""
     })
 

@@ -64,6 +64,7 @@ export default function Profile() {
     dispatch(liste_des_article_non_verser(deposant._id)).then((action) => {
       setTotal_non_verser(action.payload.article?.map(article => article.montant_reverser).reduce((prev, curr) => prev + curr, 0))
       setArticles_non_verser(action.payload.article)
+
     })
   }, [dispatch, articles, deposant])
 

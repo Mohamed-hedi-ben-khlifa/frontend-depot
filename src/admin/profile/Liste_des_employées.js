@@ -76,16 +76,16 @@ export default function Liste_des_employées(props) {
                                                     <span className="text-xm text-primary font-weight-bold"> {deposant.ref}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
-                                                    <span className="text-sm font-weight-bold"> {deposant.email}</span>
+                                                    <span className="text-sm font-weight-bold"> {deposant.email? deposant.email: "*******@mail.com"}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
-                                                    <span className="text-xm text-success font-weight-bold"> +216 {deposant.telephone}</span>
+                                                    <span className="text-xm text-success font-weight-bold"> +216 {deposant.telephone?deposant.telephone:"** *** ***"}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
-                                                    <span className="text-sm  font-weight-bold">{deposant.adress} </span>
+                                                    <span className="text-sm  font-weight-bold">{deposant.adress?deposant.adress:"Rue ******"} </span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm">
-                                                    <span className="text-xm text-dark  font-weight-bold"> {deposant.codepostal}  </span>
+                                                    <span className="text-xm text-dark  font-weight-bold"> {deposant.codepostal?deposant.codepostal:"****"}  </span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm " style={{ marginLeft: '-10%' }}>
                                                     <span className="text-sm font-weight-bold"> {deposant.role} </span>

@@ -6,20 +6,20 @@ import { get_employées } from '../../store/userSlice'
 export default function Ajouter_un_emplye(props) {
 
     const dispatch = useDispatch()
-    const d = new Date()
+
     const [deposant, setDeposant] = useState({
         nom: "",
         prenom: "",
         email: "",
         pasword: "",
-        telephone: undefined,
+        telephone: "",
         adress: "",
-        cin: undefined,
+        cin: "",
         role: "Vendeur",
-        dateN: undefined,
-        codepostal: undefined,
-        dateCreation: new Date(d.getDay(), d.getMonth(), d.getFullYear()),
-        image: undefined
+        dateN: "",
+        codepostal: "",
+        dateCreation:   new Date(Date.now()),
+        image: ""
     })
 
     const handleChange = e => {

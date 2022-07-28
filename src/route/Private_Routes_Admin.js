@@ -1,10 +1,9 @@
-
 import { Navigate, Outlet } from 'react-router-dom'
 import SideBar from '../admin/component/SideBar'
 import Footer from '../admin/component/Footer'
 import { ajouter_boutique, information } from '../store/boutiqueSlice';
 import { useDispatch } from 'react-redux';
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 export const Private_Routes_Admin = (props) => {
@@ -40,7 +39,7 @@ export const Private_Routes_Admin = (props) => {
             <SideBar  boutique={boutique}/>
           </div>
           <div className="col-10" style={{ marginLeft: '13%', width: '85%' }}>
-            {(token && props.role === 'admin') ? <Outlet /> : <Navigate to='/connexion' />}
+            {(token !== null && props.role === 'admin') ? <Outlet /> : <Navigate to='/connexion' />}
             <Footer />
           </div>
         </div>
@@ -48,3 +47,7 @@ export const Private_Routes_Admin = (props) => {
     </div>
   )
 }
+
+
+
+

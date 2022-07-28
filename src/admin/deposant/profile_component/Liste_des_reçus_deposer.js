@@ -33,9 +33,12 @@ export default function Liste_des_reçus_deposer(props) {
     function formatTime(date) {
         var d = new Date(date),
             h = d.getHours(),
-            m = d.getMinutes(),
-            s = d.getSeconds();
-        return [h, m, s].join(':');
+            m = d.getMinutes()
+            if (h.length < 2)
+            h = '0' + h;
+        if (m.length < 2)
+            m = '0' + m;
+        return [h, m].join(':');
     }
 
     const modal = (reçu) => { setReçu(reçu); }

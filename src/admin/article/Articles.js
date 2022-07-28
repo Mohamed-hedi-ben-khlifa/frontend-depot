@@ -50,7 +50,7 @@ export default function Articles() {
 
   useEffect(() => { dispatch(liste_des_articles()).then(action => setArticles(action.payload.article)) },[,dispatch])
 
-  useEffect(() => { dispatch(liste_des_articles()).then(action => console.log(action.payload.article)) },[,dispatch])
+
 
   useEffect(() => {
     socket.on("mettre_a_jour_liste_des_articles", () => {
@@ -197,7 +197,7 @@ export default function Articles() {
 
   const fileChange = e => {
 
-    console.log(e.target.files)
+
     const photos = new FormData()
     const files = e.target.files
     for (let i = 0; i < files.length; i++) {
@@ -337,22 +337,25 @@ export default function Articles() {
                       <span className="  text-dark "> $ {article.prix_vente_ttc ? (article.prix_vente_ttc).toFixed(3) : "0,000"}</span>
                     </td>
                     <td className="align-middle text-center text-sm  font-weight-bold">
-                      {article.date_vendu === null ? <span className="text-primary ">----/--/--</span> : <span></span>}
+                      {article.date_vendu === null ? <span className="text-dark ">----/--/--</span> : <span></span>}
                       {article.date_vendu !== null ? <span className=" ">{formatDate(article.date_vendu)}</span> : <span></span>}
                     </td>
                     <td className="align-middle text-center text-xs  font-weight-bold">
                       <a data-bs-toggle="modal"  data-bs-target="#tirer" type="button" onClick={() => modal(article)} >
                         {article.status_reversement === "Retour" ? <span className="text-dark ">Retour</span> : <span></span>}
                         {article.status_reversement === "Oui" ? <span className="text-success ">{article.status_vendu}</span> : <span></span>}
-                        {article.status_reversement === "non" ? <span className="text-primary ">Non</span> : <span></span>}
+                        {article.status_reversement === "Non" ? <span className="text-primary ">Non</span> : <span></span>}
+                        {article.status_reversement === null ? <span className="text-dark ">------</span> : <span></span>}
                       </a>
                     </td>
                     <td className="align-middle text-center text-dark text-sm  font-weight-bold">
-                      <span className=" ">$ {article.montant_reverser ? (article.montant_reverser).toFixed(3) : "0,000"}  </span>
+                    {article.status_reversement === null ? <span className="text-dark ">----------</span> : <span className=" ">$ {article.montant_reverser?(article.montant_reverser)?.toFixed(3) :"0.000"}  </span>}
                     </td>
                     <td className="align-middle text-center text-sm  font-weight-bold">
-                      {article.date_reversement === null ? <span className="text-primary ">----/--/--</span> : <span></span>}
-                      {article.date_reversement !== null ? <span className=" ">{formatDate(article.date_reversement)}</span> : <span></span>}
+                    {article.status_reversement === null ? <span className="text-dark "> ----------</span> :
+                     article.date_reversement === null ? <span className="text-dark ">----/--/--</span> : <span>{formatDate(article.date_reversement)}</span>
+                 }
+                     
                     </td>
                     <td>
                       <a className="material-symbols-outlined" type="button" onClick={() => {

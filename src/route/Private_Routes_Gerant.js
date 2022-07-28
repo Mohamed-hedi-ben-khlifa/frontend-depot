@@ -16,7 +16,7 @@ export const Private_Routes_Gerant = (props) => {
             <SideBar />
           </div>
           <div className="col-10" style={{ marginLeft: '13%', width: '85%' }}>
-            {(token.length > 0 && props?.role === 'Gérant') ? <Outlet /> : <Navigate to='/connexion' />}
+            {(token  !== null && props?.role === 'Gérant') ? <Outlet /> : <Navigate to='/connexion' />}
             <Footer />
           </div>
         </div>
